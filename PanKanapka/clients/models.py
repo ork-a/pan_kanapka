@@ -5,7 +5,7 @@ from django.contrib.auth.models import (
 
 
 class Organization(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     address = models.CharField(max_length=255)
 
 
@@ -48,7 +48,7 @@ class Client(AbstractBaseUser):
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=100)
     active = models.BooleanField(default=True)
-    group = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
+    group = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
 
