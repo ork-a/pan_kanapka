@@ -16,7 +16,7 @@ class Skladniki(models.Model):
 class Kanapki(models.Model):
     Kan_Cena = models.FloatField(null=True)
     Kan_Archiwalny = models.IntegerField(null=True)
-    KaS_Ikona = models.BinaryField(null=True)
+    Kan_Ikona = models.BinaryField(null=True)
 
 class SkladnikiAlergeny(models.Model):
     SklA_AleId = models.ForeignKey(Alergeny, on_delete=models.CASCADE)
@@ -25,5 +25,4 @@ class SkladnikiAlergeny(models.Model):
 class KanapkiSkladniki(models.Model):
     KaS_SklId = models.ForeignKey(Skladniki, on_delete=models.CASCADE)
     KaS_KanId = models.ForeignKey(Kanapki, on_delete=models.CASCADE)
-    Kas_Ilosc = models.IntegerField(null=True)
-    Kas_Ilosc = models.IntegerField(null=True)
+    KaS_Ilosc = models.IntegerField(null=True)
