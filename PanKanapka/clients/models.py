@@ -4,15 +4,18 @@ from django.contrib.auth.models import (
 )
 
 
-class Organization(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    address = models.CharField(max_length=255)
+class Organizacja(models.Model):
+    nazwa = models.CharField(max_length=100, unique=True)
+    adres = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.nazwa
 
 
 class ClientManager(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError('Użytkownik musi posiadać adres email.')
 
         user = self.model(
             email=self.normalize_email(email),
@@ -27,7 +30,7 @@ class ClientManager(BaseUserManager):
             email,
             password=password,
         )
-        user.staff = True
+        user.obsluga = True
         user.save(using=self._db)
         return user
 
@@ -37,19 +40,19 @@ class ClientManager(BaseUserManager):
             email,
             password=password,
         )
-        user.staff = True
+        user.obsluga = True
         user.admin = True
         user.save(using=self._db)
         return user
 
 
-class Client(AbstractBaseUser):
+class Uzytkownik(AbstractBaseUser):
     email = models.CharField(max_length=100, default=None, unique=True)
-    name = models.CharField(max_length=100)
-    surname = models.CharField(max_length=100)
-    active = models.BooleanField(default=True)
-    group = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
-    staff = models.BooleanField(default=False)
+    imie = models.CharField(max_length=100)
+    nazwisko = models.CharField(max_length=100)
+    aktywny = models.BooleanField(default=True)
+    grupa = models.ForeignKey(Organizacja, on_delete=models.SET_NULL, null=True, blank=True)
+    obsluga = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
@@ -73,10 +76,10 @@ class Client(AbstractBaseUser):
 
     @property
     def is_staff(self):
-        return self.staff
+        return self.obsluga
 
     @property
     def is_active(self):
-        return self.active
+        return self.aktywny
 
     objects = ClientManager()
