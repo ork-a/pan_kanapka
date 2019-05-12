@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'clients.apps.ClientsConfig',
     'bulka.apps.BulkaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+AUTH_USER_MODEL = 'clients.Uzytkownik'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
