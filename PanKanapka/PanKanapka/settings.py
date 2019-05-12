@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'clients.apps.ClientsConfig',
     'bulka.apps.BulkaConfig',
+    'orders.apps.OrdersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,7 +59,11 @@ ROOT_URLCONF = 'PanKanapka.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 os.path.join(BASE_DIR, 'clients/templates'),
+                 os.path.join(BASE_DIR, 'orders/templates'),
+                 os.path.join(BASE_DIR, 'orders/templates'),
+                 os.path.join(BASE_DIR, 'bulka/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

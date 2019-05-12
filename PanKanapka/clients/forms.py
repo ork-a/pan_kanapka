@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import UserChangeForm
 
 from .models import Uzytkownik
 
@@ -23,7 +24,7 @@ class RegisterForm(forms.ModelForm):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
+            raise forms.ValidationError("Hasła nie są identyczne")
         return password2
 
 
@@ -50,12 +51,19 @@ class UserAdminCreationForm(forms.ModelForm):
         return user
 
 
-class UserAdminChangeForm(forms.ModelForm):
-    password = ReadOnlyPasswordHashField()
-
-    class Meta:
+class UserAdminChangeForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
         model = Uzytkownik
-        fields = ('email', 'password', 'aktywny', 'admin')
 
-    def clean_password(self):
-        return self.initial["password"]
+
+# class UserAdminChangeForm(forms.ModelForm):
+#     password = ReadOnlyPasswordHashField()
+#
+#     class Meta:
+#         model = Uzytkownik
+#         fields = ('email', 'password', 'aktywny', 'admin')
+#
+#     def clean_password(self):
+#         import ipdb
+#         ipdb.set_trace()
+#         return self.initial["password"]
