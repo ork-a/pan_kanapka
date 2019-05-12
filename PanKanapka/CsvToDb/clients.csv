@@ -1,0 +1,3 @@
+email,name,surname,active,group,staff,admin
+admin@admin.com,Adam,Administracki,true,null,false,true
+alicja@glodni.pl,Alicja,Mniamek,true,null,false,false
