@@ -27,20 +27,20 @@
         </tr>
       {% endfor %}
       <tr>
-        {% if order.get_cart_total != None %}
-        <td colspan=2>
-          <strong class="pull-right">Order Total:</strong>
+        {% if order.get_total != None %}
+        <td colspan=1>
+          <strong class="pull-right">W sumie:</strong>
         </td>
         
         <td colspan= 1>
-          $<strong>{{ order.get_cart_total }}</strong>
+          <strong>{{ order.get_total }} PLN</strong>
         </td>
         {% endif %}
       </tr>
       <tr>
         <td colspan=1 >
           <a href="{% url 'sandwiches:sandwiches' %}" class="btn btn-warning pull-left">
-            {% if order %}Mam chęć na więcej{% else %}Add Items to Cart {% endif %}
+            {% if order %}Wróć do wyboru kanapek {% endif %}
           </a> 
         </td>
         <td colspan=2>

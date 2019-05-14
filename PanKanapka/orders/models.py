@@ -26,7 +26,10 @@ class Order(models.Model):
         return self.sandwiches.all()
 
     def get_price(self):
-        return sum([sandwich.sandwich.price for sandwich in self.sandwiches.all()])
+        return sum([sandwich.sandwich.Kan_Cena for sandwich in self.sandwiches.all()])
+
+    def get_total(self):
+        return sum([sandwich.sandwich.Kan_Cena for sandwich in self.sandwiches.all()])
 
     def __str__(self):
         return '{} - {}'.format(self.super_user.grupa.nazwa, datetime.date.today().strftime('%d-%m-%Y'))
