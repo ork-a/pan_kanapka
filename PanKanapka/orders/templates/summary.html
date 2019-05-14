@@ -6,22 +6,20 @@
    <div class="row">
     <table class="table table-hover table-bordered text-center">
       <tr class="text-center">
-        <th>no.</th>
         <th>Kanapka</th>
         <th>Cena</th>
       </tr>
-      {% for item in order.get_cart_items %}
+      {% for item in order.get_order %}
         <tr>
-          <td>{{ forloop.counter }}</td>
           <td>
-            {{ item.product.name }}
+            {{ item.sandwich.Kan_Nazwa }}
             <span class="pull-right">
-              <a href="{% url 'shopping_cart:delete_item' item.id %}" data-balloon="remove this item from cart" class="text-danger" onclick="return confirm_delete();">
+              <a href="{% url 'orders:delete_sandwich' item.id %}" data-balloon="Usuń kanapkę z koszyka" class="text-danger" onclick="return confirm_delete();">
                 <i class="fas fa-trash"></i>
               </a>
             </span>
           </td>
-          <td>{{ item.product.price }}</td>
+          <td>{{ item.sandwich.Kan_Cena }} PLN</td>
         </tr>
       {% empty %}
         <tr>
@@ -46,8 +44,8 @@
           </a> 
         </td>
         <td colspan=2>
-          {% if order.get_cart_items %}
-            <a href="{% url 'shopping_cart:checkout' %}" class="pull-right btn btn-primary">Proceed To Checkout</a>
+          {% if order.get_order %}
+            <a href="{% url 'sandwiches:sandwiches' %}" class="pull-right btn btn-primary">Zamów</a>
           {% endif %}
         </td>
       </tr>

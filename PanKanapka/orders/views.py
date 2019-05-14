@@ -32,6 +32,13 @@ def make_single_order(request, **kwargs):
     messages.info(request, "zamówienie złożone")
     return redirect(reverse('sandwiches:sandwiches'))
 
+@login_required()
+def delete_sandwich(request, item_id):
+    item_to_delete = OrderSandwiches.objects.filter(pk=item_id)
+    if item_to_delete.exists():
+        item_to_delete[0].delete()
+        messages.info(request, "Kanapka usunięta")
+    return redirect(reverse('orders:summary'))
 
 @login_required()
 def order_details(request, **kwargs):
