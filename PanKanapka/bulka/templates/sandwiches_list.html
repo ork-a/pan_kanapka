@@ -13,9 +13,9 @@
             <p>{{ object.Kan_Nazwa }}</p>
             <p>Cena: {{ object.Kan_Cena }} PLN</p>
             {% if object in current_order_products %}
-            <a href="{% url 'orders:summary' %}" class="btn btn-warning">Zamówione</a>
+            <a href="{% url 'orders:summary' %}" class="btn btn-warning">W koszyku</a>
             {% else %}
-            <a href="{% url 'orders:single_order' object.id %}" class="btn btn-warning">Zamów</a>
+            <a href="{% url 'orders:single_order' object.id%}" class="btn btn-warning">Zamów</a>
             {% endif %}
             <hr>
         </div>

@@ -17,16 +17,13 @@ class OrderSandwiches(models.Model):
 
 
 class Order(models.Model):
-    super_user = models.ForeignKey(Uzytkownik, on_delete=models.CASCADE, null=True)  # super_user should be change to user
+    super_user = models.ForeignKey(Uzytkownik, on_delete=models.CASCADE, null=True)  # super_user should be changed to user
     is_ordered = models.BooleanField(default=False)
     sandwiches = models.ManyToManyField(OrderSandwiches)
     date_ordered = models.DateTimeField(auto_now=True)
 
     def get_order(self):
         return self.sandwiches.all()
-
-    def get_price(self):
-        return sum([sandwich.sandwich.Kan_Cena for sandwich in self.sandwiches.all()])
 
     def get_total(self):
         return sum([sandwich.sandwich.Kan_Cena for sandwich in self.sandwiches.all()])

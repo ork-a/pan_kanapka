@@ -6,11 +6,16 @@
    <div class="row">
     <table class="table table-hover table-bordered text-center">
       <tr class="text-center">
+        <th>Ilość</th>
         <th>Kanapka</th>
         <th>Cena</th>
       </tr>
       {% for item in order.get_order %}
         <tr>
+          <td>
+            <input value={{item.quantity}}>
+            <a href="{% url 'orders:update_quantity' item.id item.quantity %}" class="btn btn-primary update-quantity">Aktualizuj</a>
+          </td>
           <td>
             {{ item.sandwich.Kan_Nazwa }}
             <span class="pull-right">
@@ -28,7 +33,7 @@
       {% endfor %}
       <tr>
         {% if order.get_total != None %}
-        <td colspan=1>
+        <td colspan=2>
           <strong class="pull-right">W sumie:</strong>
         </td>
         
@@ -38,12 +43,12 @@
         {% endif %}
       </tr>
       <tr>
-        <td colspan=1 >
+        <td colspan=2 >
           <a href="{% url 'sandwiches:sandwiches' %}" class="btn btn-warning pull-left">
             {% if order %}Wróć do wyboru kanapek {% endif %}
           </a> 
         </td>
-        <td colspan=2>
+        <td colspan=1>
           {% if order.get_order %}
             <a href="{% url 'sandwiches:sandwiches' %}" class="pull-right btn btn-primary">Zamów</a>
           {% endif %}
@@ -55,11 +60,15 @@
  </section>
 {% endblock %}
 
-{% block scripts %}
-  {{ block.super }}
-  <script>
-  function confirm_delete(){
-    return confirm("Chcesz usunąć kanapkę?");
-  }
-  </script>
-{% endblock scripts %}
+
+{% block script %}
+<script>
+$(document).ready (function () {
+    $(".update-quantity").one ('click', function (e) {
+        var url_quantity =  $(this).attr('href');
+        var regex_quantity = /(\d+)(?!.*\d)/;
+        this.href = url_quantity.replace(regex_quantity, $(this).siblings('input').val())
+    });
+});
+</script>
+{% endblock script %}
