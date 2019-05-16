@@ -14,6 +14,7 @@ class Skladniki(models.Model):
     Skl_Ikona = models.ImageField(blank=True, null=True, upload_to="skladniki/images/")
 	
 class Kanapki(models.Model):
+    Kan_Nazwa = models.TextField(null=True)
     Kan_Cena = models.FloatField(null=True)
     Kan_Archiwalny = models.IntegerField(null=True)
     Kan_Ikona =  models.ImageField(blank=True, null=True, upload_to="kanapki/images/")
