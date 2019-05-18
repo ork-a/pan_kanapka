@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'clients.apps.ClientsConfig',
-    'bulka.apps.BulkaConfig',
+    'sandwiches.apps.SandwichesConfig',
     'orders.apps.OrdersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-AUTH_USER_MODEL = 'clients.Uzytkownik'
+AUTH_USER_MODEL = 'clients.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -62,8 +62,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'templates'),
                  os.path.join(BASE_DIR, 'clients/templates'),
                  os.path.join(BASE_DIR, 'orders/templates'),
-                 os.path.join(BASE_DIR, 'orders/templates'),
-                 os.path.join(BASE_DIR, 'bulka/templates')],
+                 os.path.join(BASE_DIR, 'sandwiches/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,3 +126,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'sandwiches/media')

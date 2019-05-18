@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import UserChangeForm
 
-from .models import Uzytkownik
+from .models import User
 
 
 class RegisterForm(forms.ModelForm):
@@ -10,12 +10,12 @@ class RegisterForm(forms.ModelForm):
     password2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput)
 
     class Meta:
-        model = Uzytkownik
+        model = User
         fields = ('email',)
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        qs = Uzytkownik.objects.filter(email=email)
+        qs = User.objects.filter(email=email)
         if qs.exists():
             raise forms.ValidationError("Email jest zajęty.")
         return email
@@ -33,7 +33,7 @@ class UserAdminCreationForm(forms.ModelForm):
     password2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput)
 
     class Meta:
-        model = Uzytkownik
+        model = User
         fields = ('email',)
 
     def clean_password2(self):
@@ -53,17 +53,4 @@ class UserAdminCreationForm(forms.ModelForm):
 
 class UserAdminChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
-        model = Uzytkownik
-
-
-# class UserAdminChangeForm(forms.ModelForm):
-#     password = ReadOnlyPasswordHashField()
-#
-#     class Meta:
-#         model = Uzytkownik
-#         fields = ('email', 'password', 'aktywny', 'admin')
-#
-#     def clean_password(self):
-#         import ipdb
-#         ipdb.set_trace()
-#         return self.initial["password"]
+        model = User

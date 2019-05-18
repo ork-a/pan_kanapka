@@ -2,23 +2,23 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .forms import UserAdminCreationForm, UserAdminChangeForm
-from .models import Uzytkownik, Organizacja
+from .models import User, Company
 
 
 class ClientAdmin(BaseUserAdmin):
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
 
-    list_display = ('email', 'imie', 'grupa', 'nazwisko', 'aktywny', 'obsluga')
-    list_filter = ('admin',)
+    list_display = ('email', 'name', 'group', 'surname', 'active', 'staff')
+    list_filter = ('group', 'staff')
     fieldsets = (
-        (None, {'fields': ('email', 'imie', 'grupa', 'nazwisko', 'aktywny', 'obsluga')}),
+        (None, {'fields': ('email', 'name', 'group', 'surname', 'active', 'staff')}),
     )
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'grupa', 'password1', 'password2', 'imie', 'nazwisko', 'aktywny', 'obsluga')}
+            'fields': ('email', 'group', 'password1', 'password2', 'name', 'surname', 'active', 'staff')}
         ),
     )
     search_fields = ('email',)
@@ -26,5 +26,5 @@ class ClientAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
-admin.site.register(Uzytkownik, ClientAdmin)
-admin.site.register(Organizacja)
+admin.site.register(User, ClientAdmin)
+admin.site.register(Company)
