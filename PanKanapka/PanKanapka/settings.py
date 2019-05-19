@@ -32,7 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'clients.apps.ClientsConfig',
-    'bulka.apps.BulkaConfig',
+    'sandwiches.apps.SandwichesConfig',
+    'orders.apps.OrdersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-AUTH_USER_MODEL = 'clients.Uzytkownik'
+AUTH_USER_MODEL = 'clients.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,7 +59,10 @@ ROOT_URLCONF = 'PanKanapka.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 os.path.join(BASE_DIR, 'clients/templates'),
+                 os.path.join(BASE_DIR, 'orders/templates'),
+                 os.path.join(BASE_DIR, 'sandwiches/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,7 +127,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-ENV_PATH = os.path.dirname(os.path.abspath(__file__))
-MEDIA_ROOT = os.path.join(ENV_PATH, 'media')
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'sandwiches/media')
+
