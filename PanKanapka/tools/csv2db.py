@@ -1,9 +1,8 @@
-#from PanKanapka.clients.test_importu import Test
-from clients.models import Uzytkownik
-from bulka.models import Alergeny
-from bulka.models import Skladniki
-from bulka.models import Kanapki
-
+from clients.models import User
+from clients.models import Company
+from sandwiches.models import Allergen
+from sandwiches.models import Ingredient
+from sandwiches.models import Sandwich
 import csv
 
 
@@ -13,53 +12,64 @@ class DbManager:
     clients_csv_name = "doc/demo_data_in_csv/clients.csv"
     ingredients_csv_name = "doc/demo_data_in_csv/ingredients.csv"
     sandwiches_csv_name = "doc/demo_data_in_csv/sandwiches.csv"
+    companies_csv_name = "doc/demo_data_in_csv/companies.csv"
 
     def import_clients(self):
         with open(self.clients_csv_name) as clients_csv_file:
             csv_reader = csv.reader(clients_csv_file, delimiter=',')
             for email, name, surname, active, group, staff, admin in csv_reader:
-                client = Uzytkownik()
+                client = User()
                 client.email = email
-                client.imie = name
-                client.nazwisko = surname
-                client.aktywny = active
+                client.name = name
+                client.surname = surname
+                client.active = active
 #               client.grupa = group
-                client.obsluga = staff
+                client.staff = staff
                 client.admin = admin
                 client.save()
 
     def import_allergens(self):
         with open(self.allergens_csv_name) as allergens_csv_file:
             csv_reader = csv.reader(allergens_csv_file, delimiter=',')
-            for name in csv_reader:
-                allergen = Alergeny()
-                allergen.Ale_Nazwa = name
+            for row in csv_reader:
+                allergen = Allergen()
+                allergen.name = row[0]
                 allergen.save()
 
     def import_ingredients(self):
         with open(self.ingredients_csv_name) as ingredients_csv_file:
             csv_reader = csv.reader(ingredients_csv_file, delimiter=',')
-            for group, name, archive, kcal, weight_per_portion, dummy, price in csv_reader:
-                ingredient = Skladniki()
-                ingredient.Skl_Grupa = group
-                ingredient.Skl_Nazwa = name
-                ingredient.Skl_Kcal = kcal
-                ingredient.Skl_GramNaPorcje = weight_per_portion
-                ingredient.Skl_Cena = price
-   #             ingredient.save()
+            for row in csv_reader:
+                ingredient = Ingredient()
+                ingredient.name = row[0]
+                ingredient.group = None
+                ingredient.calories_per_portion = row[1]
+                ingredient.portion_size_grams = row[2]
+                ingredient.price = row[3]
+                ingredient.save()
 
     def import_sandwiches(self):
         with open(self.sandwiches_csv_name) as sandwiches_csv_file:
             csv_reader = csv.reader(sandwiches_csv_file, delimiter=',')
-            for price, archive, name, d1, d2, d3, d4, d5, d6, d7 in csv_reader:
-                sandwich = Kanapki()
-                sandwich.Kan_Cena = price
-                sandwich.Kan_Archiwalny = archive
+            for row in csv_reader:
+                sandwich = Sandwich()
+                sandwich.name = row[0]
+                sandwich.price = row[1]
+                sandwich.accessible = row[2]
+#                sandwich.ingredients.set(None)
                 sandwich.save()
 
+    def import_companies(self):
+        with open(self.companies_csv_name) as companies_csv_file:
+            csv_reader = csv.reader(companies_csv_file, delimiter=',')
+            for name, address in csv_reader:
+                company = Company()
+                company.name = name
+                company.address = address
+                company.save()
 
     def delete_clients(self):
-        client = Uzytkownik()
+        client = User()
         client.objects.all().delete()
 
 

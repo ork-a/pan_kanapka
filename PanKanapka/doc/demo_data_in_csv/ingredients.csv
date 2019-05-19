@@ -1,24 +1,35 @@
-null,Pasta jajeczna,False,420,150,250,4.50
-null,Pasta twarogowa,False,100,150,250,3.60
-null,Masło orzechowe,False,695,15,50,3.50
-null,Ser żółty,False,380,20,150,4.50
-null,Ser feta,False,220,30,150,2.50
-null,Mozzarella,False,250,80,250,4.05
-null,Pomidor,False,20,60,50,4.90
-null,Ogórek świeży,False,13,25,50,5.50
-null,Ogórek kiszony,False,11,25,50,3.30
-null,Cebula,False,33,10,50,2.80
-null,Sałata masłowa,False,14,5,50,4.60
-null,Rukola,False,25,5,50,2.50
-null,Rzodkiewka,False,18,18,50,1.50
-null,Papryka,False,32,30,50,2.50
-null,Szczypiorek,False,35,5,50,3.50
-null,Pasta z pomidorów suszonych,False,213,40,150,5.50
-null,Masło,False,740,10,100,0.50
-null,Ketchup,False,100,15,50,0.50
-null,Majonez,False,660,25,100,0.55
-null,Awokado,False,170,15,100,2.60
-null,Oliwki zielone,False,130,10,50,5.50
-null,Ananas,False,62,15,50,3.50
-null,Nutella,False,540,30,200,2.55
-null,Croissant,False,410,65,300,4.50
+Pasta jajeczna,420,150,4.50
+Pasta twarogowa,100,150,3.60
+Masło orzechowe,695,50,3.50
+Ser żółty,380,150,4.50
+Ser feta,220,150,2.50
+Mozzarella,250,150,4.05
+Pomidor,20,50,4.90
+Ogórek świeży,13,50,5.50
+Ogórek kiszony,11,50,3.30
+Cebula,33,10,2.80
+Sałata masłowa,14,5,4.60
+Rukola,25,5,2.50
+Rzodkiewka,18,18,1.50
+Papryka,32,30,2.50
+Szczypiorek,35,5,3.50
+Pasta z pomidorów suszonych,213,40,5.50
+Masło,740,10,0.50
+Ketchup,100,15,0.50
+Majonez,660,25,0.55
+Awokado,170,15,2.60
+Oliwki zielone,130,10,5.50
+Ananas,62,15,3.50
+Nutella,540,30,2.55
+Croissant,410,65,4.50
+Grillowany kurczak,120,50,4.5
+Kotlet wieprzowy,390,150,4.5
+Kotlet wołowy,390,150,4.5
+Kotlet rybny,390,150,4.5
+Kotlet sojowy,390,150,4.5
+Bułka pszenna M,300,60,4.5
+Bułka pszenna XL,300,120,3.8
+Bułka z ziarnami M,325,60,3.5
+Bułka z ziarnami XL,325,120,3.5
+Bułka bezglutenowa M,250,60,4.5
+Bułka bezglutenowa XL,250,120,4.5
