@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+   <div class="row">
+    <table class="table table-hover table-bordered text-center">
+      <tr class="text-center">
+        <th>Użytkownik</th>
+        <th>Lista Kanapek</th>
+      </tr>
+      {% for order in company_orders %}
+        <tr>
+            <td>
+                {{order.user.name}} - {{order.user.surname}}
+            </td>
+            <td>
+                {% for sandwich in order.get_order %}
+                  {{sandwich.sandwich.name}} - {{sandwich.quantity}}<br>
+                {% endfor %}
+            </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+   </div>
+ </section>
+{% endblock %}
+
+{% block script %}
+<script>
+</script>
+{% endblock script %}

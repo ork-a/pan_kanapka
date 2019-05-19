@@ -4,12 +4,12 @@ from django.contrib.auth.models import (
 )
 
 
-class Organizacja(models.Model):
-    nazwa = models.CharField(max_length=100, unique=True)
-    adres = models.CharField(max_length=255)
+class Company(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    address = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.nazwa
+        return self.name
 
 
 class ClientManager(BaseUserManager):
@@ -30,7 +30,7 @@ class ClientManager(BaseUserManager):
             email,
             password=password,
         )
-        user.obsluga = True
+        user.staff = True
         user.save(using=self._db)
         return user
 
@@ -40,24 +40,23 @@ class ClientManager(BaseUserManager):
             email,
             password=password,
         )
-        user.obsluga = True
+        user.staff = True
         user.admin = True
         user.save(using=self._db)
         return user
 
 
-class Uzytkownik(AbstractBaseUser):
+class User(AbstractBaseUser):
     email = models.CharField(max_length=100, default=None, unique=True)
-    imie = models.CharField(max_length=100)
-    nazwisko = models.CharField(max_length=100)
-    aktywny = models.BooleanField(default=True)
-    grupa = models.ForeignKey(Organizacja, on_delete=models.SET_NULL, null=True, blank=True)
-    obsluga = models.BooleanField(default=False)
+    name = models.CharField(max_length=100)
+    surname = models.CharField(max_length=100)
+    active = models.BooleanField(default=True)
+    group = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
+    staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-
 
     def get_full_name(self):
         return self.email
@@ -76,10 +75,10 @@ class Uzytkownik(AbstractBaseUser):
 
     @property
     def is_staff(self):
-        return self.obsluga
+        return self.staff
 
     @property
     def is_active(self):
-        return self.aktywny
+        return self.active
 
     objects = ClientManager()

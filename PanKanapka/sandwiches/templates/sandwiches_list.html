@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ message }}
+    <div class="row">
+        <div class="col-sm-12">
+        <H1>DOSTĘPNE KANAPKI</H1>
+            <hr>
+        </div>
+
+    {% for object in object_list %}
+        {% if object.accessible %}
+            <div class="col-sm-12">
+                <div>
+                <p>{{ object.name }}</p>
+                <p>Cena: {{ object.price }} PLN</p>
+                {% if object in current_order_products %}
+                <a href="{% url 'orders:summary' %}" class="btn btn-warning">W koszyku</a>
+                {% else %}
+                <a href="{% url 'orders:single_order' object.id%}" class="btn btn-warning">Zamów</a>
+                {% endif %}
+                    <img src="{{object.image.url}}"></div>
+                <hr>
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endblock content %}

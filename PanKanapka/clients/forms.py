@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import UserChangeForm
 
-from .models import Uzytkownik
+from .models import User
 
 
 class RegisterForm(forms.ModelForm):
@@ -9,12 +10,12 @@ class RegisterForm(forms.ModelForm):
     password2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput)
 
     class Meta:
-        model = Uzytkownik
+        model = User
         fields = ('email',)
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        qs = Uzytkownik.objects.filter(email=email)
+        qs = User.objects.filter(email=email)
         if qs.exists():
             raise forms.ValidationError("Email jest zajęty.")
         return email
@@ -23,7 +24,7 @@ class RegisterForm(forms.ModelForm):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
+            raise forms.ValidationError("Hasła nie są identyczne")
         return password2
 
 
@@ -32,7 +33,7 @@ class UserAdminCreationForm(forms.ModelForm):
     password2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput)
 
     class Meta:
-        model = Uzytkownik
+        model = User
         fields = ('email',)
 
     def clean_password2(self):
@@ -50,12 +51,6 @@ class UserAdminCreationForm(forms.ModelForm):
         return user
 
 
-class UserAdminChangeForm(forms.ModelForm):
-    password = ReadOnlyPasswordHashField()
-
-    class Meta:
-        model = Uzytkownik
-        fields = ('email', 'password', 'aktywny', 'admin')
-
-    def clean_password(self):
-        return self.initial["password"]
+class UserAdminChangeForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
+        model = User
