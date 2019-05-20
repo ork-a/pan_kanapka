@@ -14,19 +14,6 @@ class DbManager:
     sandwiches_csv_name = "doc/demo_data_in_csv/sandwiches.csv"
     companies_csv_name = "doc/demo_data_in_csv/companies.csv"
 
-    def import_clients(self):
-        with open(self.clients_csv_name) as clients_csv_file:
-            csv_reader = csv.reader(clients_csv_file, delimiter=',')
-            for email, name, surname, active, group, staff, admin in csv_reader:
-                client = User()
-                client.email = email
-                client.name = name
-                client.surname = surname
-                client.active = active
-#               client.grupa = group
-                client.staff = staff
-                client.admin = admin
-                client.save()
 
     def import_allergens(self):
         with open(self.allergens_csv_name) as allergens_csv_file:
@@ -68,12 +55,32 @@ class DbManager:
                 company.address = address
                 company.save()
 
+    def import_clients(self):
+        with open(self.clients_csv_name) as clients_csv_file:
+            csv_reader = csv.reader(clients_csv_file, delimiter=',')
+            for email, name, surname, active, company_name, staff, admin in csv_reader:
+                client = User()
+                client.email = email
+                client.name = name
+                client.surname = surname
+                client.active = active
+                company = Company.objects.get(name=company_name)
+                client.group = company
+                client.staff = staff
+                client.admin = admin
+                client.save()
+
     def delete_clients(self):
-        client = User()
-        client.objects.all().delete()
+        User.objects.exclude(email="admin@kanapka.com").delete()
 
+    def delete_companies(self):
+        Company.objects.all().delete()
 
+    def delete_allergens(self):
+        Allergen.objects.all().delete()
 
+    def delete_ingredients(self):
+        Ingredient.objects.all().delete()
 
-
-
+    def delete_sandwiches(self):
+        Sandwich.objects.all().delete()
