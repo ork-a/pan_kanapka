@@ -9,15 +9,8 @@ def index(request):
 
 
 def fill_databases(request):
-    db_manager = DbManager()
-    #db_manager.import_clients()
-    db_manager.import_allergens()
-    db_manager.import_ingredients()
-    db_manager.import_sandwiches()
-    return HttpResponse("... bazy wypełnione")
+    return HttpResponse("Użyj >>python manage.py filldb<< z linii poleceń")
 
 
 def clean_databases(request):
-    db_manager = DbManager()
-    db_manager.delete_clients()
-    return HttpResponse("... bazy wyczyszczone")
+    return HttpResponse("Użyj >>python manage.py cleandb<< z linii poleceń")
