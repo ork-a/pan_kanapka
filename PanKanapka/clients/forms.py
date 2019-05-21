@@ -3,7 +3,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import UserChangeForm
 from .models import User
 
-
+EMPTY_ELEMENT = "Pole %s nie może być puste"
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -18,7 +18,7 @@ class RegisterForm(forms.ModelForm):
                 }),
         }
         error_messages = {
-            'email': {'required' : 'Podaj adres email'}
+            'email': {'required' : EMPTY_ELEMENT%'adres email'}
         }
 
     def clean_email(self):

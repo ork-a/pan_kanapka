@@ -59,5 +59,5 @@ class FromTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(
             form.errors['email'],
-            ['Podaj adres email']
+            ['Pole adres email nie może być puste']
         )
