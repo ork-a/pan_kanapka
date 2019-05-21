@@ -3,6 +3,7 @@ from django.http import HttpRequest
 from django.core.exceptions import ValidationError
 from .models import User
 from .views import registration_form
+from .forms import RegisterForm
 
 # Create your tests here.
 
@@ -46,3 +47,17 @@ class ListAndModelTest(TestCase):
         with self.assertRaises(ValidationError):
             user.save()
             user.full_clean()
+
+
+class FromTest(TestCase):
+    def test_form_render_text_input(self):
+        form = RegisterForm()
+        self.assertIn('wpisz adres email', form.as_p())
+
+    def test_form_for_blank_elements(self):
+        form =  RegisterForm(data={'email':''})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['email'],
+            ['Podaj adres email']
+        )

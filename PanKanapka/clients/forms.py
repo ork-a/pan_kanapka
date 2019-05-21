@@ -1,17 +1,25 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import UserChangeForm
-
 from .models import User
 
 
+
 class RegisterForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput())
+    password2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput())
 
     class Meta:
         model = User
-        fields = ('email',)
+        fields = ('email','name', 'surname', 'group')
+        widgets = {
+                'email': forms.fields.EmailInput(attrs={
+                    'placeholder':'wpisz adres email',
+                }),
+        }
+        error_messages = {
+            'email': {'required' : 'Podaj adres email'}
+        }
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
