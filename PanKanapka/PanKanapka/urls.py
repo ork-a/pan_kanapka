@@ -9,7 +9,6 @@ from django.views.static import serve
 
 
 urlpatterns = [
-    path('tools/', include('tools.urls')),
     path('clients/', include('clients.urls')),
     path('orders/', include('orders.urls')),
     path('', include('sandwiches.urls')),

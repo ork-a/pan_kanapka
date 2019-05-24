@@ -11,6 +11,8 @@ class Command(BaseCommand):
         db_manager = DbManager()
         db_manager.import_allergens()
         self.stdout.write(self.style.SUCCESS('Allergens populated'))
+        db_manager.import_ingredient_groups()
+        self.stdout.write(self.style.SUCCESS('Ingredient groups populated'))
         db_manager.import_ingredients()
         self.stdout.write(self.style.SUCCESS('Ingredients populated'))
         db_manager.import_sandwiches()

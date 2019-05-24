@@ -1,6 +1,7 @@
 from clients.models import User
 from clients.models import Company
 from sandwiches.models import Allergen
+from sandwiches.models import IngredientGroup
 from sandwiches.models import Ingredient
 from sandwiches.models import Sandwich
 import csv
@@ -18,31 +19,36 @@ class DbManager:
     def import_allergens(self):
         with open(self.allergens_csv_name) as allergens_csv_file:
             csv_reader = csv.reader(allergens_csv_file, delimiter=',')
-            for row in csv_reader:
+            for name in csv_reader:
                 allergen = Allergen()
-                allergen.name = row[0]
+                allergen.name = name[0]
                 allergen.save()
+
+    def import_ingredient_groups(self):
+        ingredient_group = IngredientGroup()
+        ingredient_group.name = "pieczywo"
+        ingredient_group.save()
 
     def import_ingredients(self):
         with open(self.ingredients_csv_name) as ingredients_csv_file:
             csv_reader = csv.reader(ingredients_csv_file, delimiter=',')
-            for row in csv_reader:
+            for name, calories_per_portion, portion_size_grams, price in csv_reader:
                 ingredient = Ingredient()
-                ingredient.name = row[0]
-                ingredient.group = None
-                ingredient.calories_per_portion = row[1]
-                ingredient.portion_size_grams = row[2]
-                ingredient.price = row[3]
+                ingredient.name = name
+                ingredient.group = IngredientGroup.objects.get(name="pieczywo")
+                ingredient.calories_per_portion = calories_per_portion
+                ingredient.portion_size_grams = portion_size_grams
+                ingredient.price = price
                 ingredient.save()
 
     def import_sandwiches(self):
         with open(self.sandwiches_csv_name) as sandwiches_csv_file:
             csv_reader = csv.reader(sandwiches_csv_file, delimiter=',')
-            for row in csv_reader:
+            for name, price, accessible, ingredients in csv_reader:
                 sandwich = Sandwich()
-                sandwich.name = row[0]
-                sandwich.price = row[1]
-                sandwich.accessible = row[2]
+                sandwich.name = name
+                sandwich.price = price
+                sandwich.accessible = accessible
 #                sandwich.ingredients.set(None)
                 sandwich.save()
 
@@ -78,6 +84,9 @@ class DbManager:
 
     def delete_allergens(self):
         Allergen.objects.all().delete()
+
+    def delete_ingredient_groups(self):
+        IngredientGroup.objects.all().delete()
 
     def delete_ingredients(self):
         Ingredient.objects.all().delete()

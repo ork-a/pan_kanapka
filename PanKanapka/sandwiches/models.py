@@ -18,7 +18,7 @@ class IngredientGroup(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
-    group = models.ForeignKey(IngredientGroup, on_delete=models.CASCADE, null=True, blank=True)
+    group = models.ForeignKey(IngredientGroup, on_delete=models.CASCADE)
     calories_per_portion = models.IntegerField(null=True, blank=False)
     portion_size_grams = models.IntegerField(null=True, blank=False)
     price = models.DecimalField(null=True, blank=False, decimal_places=2, max_digits=5)
