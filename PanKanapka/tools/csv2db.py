@@ -14,7 +14,7 @@ class DbManager:
     ingredients_csv_name = "doc/demo_data_in_csv/ingredients.csv"
     sandwiches_csv_name = "doc/demo_data_in_csv/sandwiches.csv"
     companies_csv_name = "doc/demo_data_in_csv/companies.csv"
-
+    sandwich_images_path = "/sandwiches/images/s{}.jpg"
 
     def import_allergens(self):
         with open(self.allergens_csv_name) as allergens_csv_file:
@@ -44,12 +44,14 @@ class DbManager:
     def import_sandwiches(self):
         with open(self.sandwiches_csv_name) as sandwiches_csv_file:
             csv_reader = csv.reader(sandwiches_csv_file, delimiter=',')
-            for name, price, accessible, ingredients in csv_reader:
+            for name, price, accessible, image_filename in csv_reader:
                 sandwich = Sandwich()
                 sandwich.name = name
                 sandwich.price = price
                 sandwich.accessible = accessible
 #                sandwich.ingredients.set(None)
+#               filename ="s1"
+                sandwich.image = "/sandwiches/images/{}".format(image_filename)
                 sandwich.save()
 
     def import_companies(self):
@@ -85,11 +87,11 @@ class DbManager:
     def delete_allergens(self):
         Allergen.objects.all().delete()
 
-    def delete_ingredient_groups(self):
-        IngredientGroup.objects.all().delete()
-
     def delete_ingredients(self):
         Ingredient.objects.all().delete()
+
+    def delete_ingredient_groups(self):
+        IngredientGroup.objects.all().delete()
 
     def delete_sandwiches(self):
         Sandwich.objects.all().delete()

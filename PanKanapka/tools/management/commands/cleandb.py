@@ -17,7 +17,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Allergens deleted'))
         db_manager.delete_ingredients()
         self.stdout.write(self.style.SUCCESS('Ingredients deleted'))
-        db_manager.delete_ingredients()
+        db_manager.delete_ingredient_groups()
         self.stdout.write(self.style.SUCCESS('Ingredient groups deleted'))
         db_manager.delete_sandwiches()
         self.stdout.write(self.style.SUCCESS('Sandwiches deleted'))
