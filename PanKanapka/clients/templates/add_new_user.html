@@ -6,6 +6,15 @@
     <h1>REJESRACJA NOWEGO UZYTKOWNIKA</h1>
 </head>
 <body>
-
+<form method='POST' action="{%block form_action%}{% endblock%}" >
+    {% for item in form %}
+        {{ item }}
+        {% csrf_token %}
+    {% endfor %}
+    {% if form.errors %}
+        <ul>{{form.email.errors}}</ul>
+    {% endif %}
+    <button type="submit"> OK </button>
+</form>
 </body>
 </html>

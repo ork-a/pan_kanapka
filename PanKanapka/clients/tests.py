@@ -49,7 +49,8 @@ class ListAndModelTest(TestCase):
             user.full_clean()
 
 
-class FromTest(TestCase):
+class FormTest(TestCase):
+
     def test_form_render_text_input(self):
         form = RegisterForm()
         self.assertIn('wpisz adres email', form.as_p())
