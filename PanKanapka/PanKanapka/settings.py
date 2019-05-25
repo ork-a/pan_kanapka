@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'tools.apps.ToolsConfig',
     'clients.apps.ClientsConfig',
     'sandwiches.apps.SandwichesConfig',
     'orders.apps.OrdersConfig',
