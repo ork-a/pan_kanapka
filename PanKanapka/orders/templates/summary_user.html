@@ -11,6 +11,7 @@
         <th>Cena</th>
       </tr>
       {% for item in order.get_order %}
+        {% if not item.is_ordered %}
         <tr>
           <td>
             <input value={{item.quantity}}>
@@ -26,6 +27,7 @@
           </td>
           <td>{{ item.sandwich.price }} PLN</td>
         </tr>
+        {% endif %}
       {% empty %}
         <tr>
           <td colspan= 3>Uuu... dzisiaj na głodnego?</td>
@@ -50,7 +52,7 @@
         </td>
         <td colspan=1>
           {% if order.get_order %}
-            <a href="{% url 'sandwiches:sandwiches' %}" class="pull-right btn btn-primary">Zamów</a>
+            <a href="{% url 'orders:confirm_order' %}" class="pull-right btn btn-primary">Zamów</a>
           {% endif %}
         </td>
       </tr>

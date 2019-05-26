@@ -1,11 +1,14 @@
+from __future__ import unicode_literals
+
 from clients.models import User
 from clients.models import Company
 from sandwiches.models import Allergen
 from sandwiches.models import IngredientGroup
 from sandwiches.models import Ingredient
 from sandwiches.models import Sandwich
+from orders.models import Order
+from orders.models import OrderSandwiches
 import csv
-
 
 class DbManager:
 
@@ -71,12 +74,17 @@ class DbManager:
                 client.email = email
                 client.name = name
                 client.surname = surname
+                client.password = 'user'
                 client.active = active
                 company = Company.objects.get(name=company_name)
                 client.group = company
                 client.staff = staff
                 client.admin = admin
                 client.save()
+
+    def delete_orders(selfself):
+        Order.objects.all().delete()
+        OrderSandwiches.objects.all().delete()
 
     def delete_clients(self):
         User.objects.exclude(email="admin@kanapka.com").delete()

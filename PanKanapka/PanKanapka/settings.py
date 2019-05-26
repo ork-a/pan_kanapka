@@ -138,3 +138,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'sandwiches/media')
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+   "django.core.context_processors.request",
+   "django.core.context_processors.media",
+   "django.contrib.messages.context_processors.messages"
+)
