@@ -74,7 +74,7 @@ class DbManager:
                 client.email = email
                 client.name = name
                 client.surname = surname
-                client.password = 'user'
+                client.set_password('user')
                 client.active = active
                 company = Company.objects.get(name=company_name)
                 client.group = company
