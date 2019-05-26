@@ -36,7 +36,7 @@ class Order(models.Model):
         return ', '.join([sandwich.sandwich.name for sandwich in self.sandwiches.all()])
 
     def get_total(self):
-        return sum([sandwich.sandwich.price for sandwich in self.sandwiches.all()])
+        return sum([sandwich.sandwich.price * sandwich.quantity for sandwich in self.sandwiches.all()])
 
     def __str__(self):
         return '{} - {} - {}'.format(self.user.group.name,

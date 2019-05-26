@@ -35,8 +35,6 @@ def make_single_order(request, **kwargs):
     user_order.sandwiches.add(order_item)
     if status:
         user_order.save()
-
-    messages.info(request, "zamówienie złożone")
     return redirect(reverse('orders:summary'))
 
 
@@ -72,3 +70,13 @@ def summary_order(request):
         'company_orders': existing_orders
     }
     return render(request, 'summary_company.html', context)
+
+@login_required()
+def confirm_order(request):
+    order_items = get_user_pending_order(request).get_order().filter(user=request.user)
+    for item in order_items:
+        if not item.is_ordered:
+            item.is_ordered = True
+            item.save()
+    messages.info(request, "zamówienie złożone")
+    return redirect(reverse('orders:summary'))
