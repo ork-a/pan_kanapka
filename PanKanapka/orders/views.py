@@ -18,6 +18,14 @@ def get_user_pending_order(request):
     return 0
 
 
+def get_user_ordered_items(request):
+    user_profile = get_object_or_404(User, email=request.user)
+    order = OrderSandwiches.objects.filter(user=user_profile, is_ordered=True)
+    if order.exists():
+        return order
+    return 0
+
+
 def get_summary_company_order(request):
     user_company = get_object_or_404(User, email=request.user).group
     orders = Order.objects.filter(user__group=user_company, is_ordered=False)
@@ -71,6 +79,7 @@ def summary_order(request):
     }
     return render(request, 'summary_company.html', context)
 
+
 @login_required()
 def confirm_order(request):
     order_items = get_user_pending_order(request).get_order().filter(user=request.user)
@@ -78,5 +87,16 @@ def confirm_order(request):
         if not item.is_ordered:
             item.is_ordered = True
             item.save()
-    messages.info(request, "zamówienie złożone")
+    messages.info(request, "Zamówienie zostało złozone. Możesz je podejrzeć w Twoich Zamówieniach.")
     return redirect(reverse('orders:summary'))
+
+
+@login_required()
+def show_confirmed_order(request):
+    ordered_items = get_user_ordered_items(request)
+    price_total = sum([item.sandwich.price * item.quantity for item in ordered_items])
+    context = {
+        'order': ordered_items,
+        'price_total': price_total
+    }
+    return render(request, 'placed_orders.html', context)
