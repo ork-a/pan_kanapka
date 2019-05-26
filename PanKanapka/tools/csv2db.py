@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from clients.models import User
 from clients.models import Company
 from sandwiches.models import Allergen
@@ -5,7 +7,6 @@ from sandwiches.models import IngredientGroup
 from sandwiches.models import Ingredient
 from sandwiches.models import Sandwich
 import csv
-
 
 class DbManager:
 
