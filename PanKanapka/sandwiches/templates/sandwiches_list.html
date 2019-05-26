@@ -5,10 +5,9 @@
 <section id="portfolio" class="portfolio">
             <div class="container">
                 <div class="row">
-                    <div class="portfolio_content text-center  wow fadeIn" data-wow-duration="5s">
+                    <div class="main_slider text-center">
                         <div class="col-md-12">
                             <div class="head_title text-center">
-                                <h4>Nasze kanapki</h4>
                                 <h3>Wybierz z gotowych kanapek</h3>
                             </div>
 						</div>
@@ -22,17 +21,19 @@
                      <div class="col-md-3 col-sm-4 col-xs-6 single_portfolio_text">
                          <img src="{{object.image.url}}" alt="" />
                          <div class="portfolio_images_overlay text-center">
-                <div>
-                <h6>{{ object.name }}</h6>
-                <p class="product_price">Cena: {{ object.price }} PLN</p>
-                {% if object in current_order_products %}
-                <a href="{% url 'orders:summary' %}" class="btn btn-primary">W koszyku</a>
-                {% else %}
-                 <a class="btn btn-primary" href="{% url 'orders:single_order' object.id%}">Zamów</a>
-                {% endif %}
-                </div>
-            </div>
+							<div>
+								<h6>{{ object.name }}</h6>
+								<p class="product_price">Cena: {{ object.price }} PLN</p>
+								{% if object in current_order_products %}
+								<a href="{% url 'orders:summary' %}" class="btn btn-primary">W koszyku</a>
+								{% else %}
+								 <a class="btn btn-primary" href="{% url 'orders:single_order' object.id%}">Zamów</a>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
         {% endif %}
     {% endfor %}
-    </div>
+    </section>
 {% endblock content %}

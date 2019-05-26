@@ -26,8 +26,17 @@ class Order(models.Model):
     def get_order(self):
         return self.sandwiches.all()
 
+    def get_company(self):
+        return self.user.group.name
+
+    def get_username(self):
+        return '{} {}'.format(self.user.name, self.user.surname)
+
+    def get_sandwiches(self):
+        return ', '.join([sandwich.sandwich.name for sandwich in self.sandwiches.all()])
+
     def get_total(self):
-        return sum([sandwich.sandwich.price for sandwich in self.sandwiches.all()])
+        return sum([sandwich.sandwich.price * sandwich.quantity for sandwich in self.sandwiches.all() if not sandwich.is_ordered])
 
     def __str__(self):
         return '{} - {} - {}'.format(self.user.group.name,

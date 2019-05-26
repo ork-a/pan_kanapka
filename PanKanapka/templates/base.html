@@ -30,6 +30,9 @@
         <link rel="stylesheet" href="{% static '/css/responsive.css' %}">
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+
 
         {% load staticfiles %}
         <script src="{% static '/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js' %}"></script>
@@ -48,11 +51,10 @@
                     <div class="row">
                         <div class="col-md-5 col-md-offset-3 col-sm-12 text-right">
                             <div class="call_us_text">
-								<a href=""><i class="fa fa-clock-o"></i> Mobilna kanapka</a>
 								<a href=""><i class="fa fa-phone"></i>000 000 000 </a>
-                                <a href=""><i class="fa fa-phone"></i>
+                                <a href=""><i class="fa fa-user-circle" aria-hidden="true"></i>
                                     {% include 'messages.html' %}
-                    {% if user.is_authenticated %}
+                        {% if user.is_authenticated %}
                         Zalogowany jako: {{request.user.name}} - {{ request.user.group.name }}
                         <a href="{% url 'clients:logout' %}?next={{ request.path|urlencode }}">Logout</a>
                         <a href="{% url 'orders:summary' %}">W koszyku</a>
@@ -95,8 +97,8 @@
                                     <ul class="nav navbar-nav navbar-right">
                                         <li><a href="#slider">Strona główna</a></li>
                                         <li><a href="#portfolio">Moje zamówienie</a></li>
-										<li><a href="#portfolio">Gotowe kanapki</a></li>
-                                        <li><a href="#footer_widget">Kontakt</a></li>
+										<li><a href="/#portfolio">Gotowe kanapki</a></li>
+                                        <li><a href="#footer">Kontakt</a></li>
                                     </ul>
                                 </div><!-- /.navbar-collapse -->
                             </div><!-- /.container-fluid -->
@@ -114,7 +116,10 @@
                             <div class="col-md-12">
                                 <div class="main_slider_content wow zoomIn" data-wow-duration="1s">
                                     <h1>Mobilna Kanapka</h1>
-                                    <p>Wybierz ulubioną kanapkę lub stwórz własną, unikatową kompozycję!</p>
+                                    <p><i class="fa fa-arrow-right" aria-hidden="true"></i>  Dokonaj wyboru
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>  Wypełnij formularz
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>  Zapłać gotówką
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>  Odbierz kanapkę</p>
                                 </div>
                             </div>
                         </div>
@@ -125,6 +130,46 @@
         </section>
 
         {% block content %}{% endblock content %}
+
+        <section id="footer_widget" class="footer_widget">
+            <div class="container">
+                <div class="row">
+                    <div class="footer_widget_content text-center">
+                        <div class="col-md-4">
+                            <div class="single_widget wow fadeIn" data-wow-duration="2s">
+                                <h3>Nasz numer telefonu:</h3>
+
+                                <div class="single_widget_info">
+                                        <span class="phone_email">tel: 00 000 000</span>
+                                        <span>Email: test@test.pl</span></p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="single_widget wow fadeIn" data-wow-duration="4s">
+                                <h3>Przyjmujemy zamówienia</h3>
+
+                                <div class="single_widget_info">
+                                    <p><span class="date_day">Od poniedziaku do piątku</span>
+                                        <span>8:00am to 10:00pm</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="single_widget wow fadeIn" data-wow-duration="5s">
+                                <h3>Nasza historia</h3>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
                 <!--Footer-->
         <footer id="footer" class="footer">
@@ -144,18 +189,19 @@
 			<a href="#"><i class="fa fa-chevron-up"></i></a>
 		</div>
 
-                {% load staticfiles %}
+        {% load staticfiles %}
         <script src="{% static '/js/vendor/jquery-1.11.2.min.js' %}"></script>
         {% load staticfiles %}
         <script src="{% static '/js/vendor/bootstrap.min.js' %}"></script>
         {% load staticfiles %}
         <script src="{% static '/js/jquery-easing/jquery.easing.1.3.js' %}"></script>
         {% load staticfiles %}
-        <script src="{% static /js/wow/wow.min.js"></script>
+        <script src="{% static '/js/wow/wow.min.js' %}"></script>
         {% load staticfiles %}
-        <script src="assets/js/plugins.js"></script>
+        <script src="{% static '/js/plugins.js' %}"></script>
         {% load staticfiles %}
-        <script src="assets/js/main.js"></script>
+        <script src="{% static '/js/main.js' %}"></script>
+
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
