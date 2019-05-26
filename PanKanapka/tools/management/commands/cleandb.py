@@ -9,6 +9,8 @@ class Command(BaseCommand):
 
     def handle(self, **options):
         db_manager = DbManager()
+        db_manager.delete_orders()
+        self.stdout.write(self.style.SUCCESS('Orders deleted'))
         db_manager.delete_clients()
         self.stdout.write(self.style.SUCCESS('Clients deleted, except admin@kanapka.com'))
         db_manager.delete_companies()
@@ -21,3 +23,4 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Ingredient groups deleted'))
         db_manager.delete_sandwiches()
         self.stdout.write(self.style.SUCCESS('Sandwiches deleted'))
+

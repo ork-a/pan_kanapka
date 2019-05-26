@@ -6,6 +6,8 @@ from sandwiches.models import Allergen
 from sandwiches.models import IngredientGroup
 from sandwiches.models import Ingredient
 from sandwiches.models import Sandwich
+from orders.models import Order
+from orders.models import OrderSandwiches
 import csv
 
 class DbManager:
@@ -79,6 +81,10 @@ class DbManager:
                 client.staff = staff
                 client.admin = admin
                 client.save()
+
+    def delete_orders(selfself):
+        Order.objects.all().delete()
+        OrderSandwiches.objects.all().delete()
 
     def delete_clients(self):
         User.objects.exclude(email="admin@kanapka.com").delete()
