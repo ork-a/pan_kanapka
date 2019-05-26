@@ -88,7 +88,6 @@
                                         <span class="icon-bar"></span>
                                     </button>
                                     {% load staticfiles %}
-                                    <a class="navbar-brand our_logo" href="{% url 'sandwiches:sandwiches' %}""><img src="{% static '/images/logo.png' %}" alt="" /></a>
                                 </div>
 
                                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -96,7 +95,7 @@
 
                                     <ul class="nav navbar-nav navbar-right">
                                         <li><a href="#slider">Strona główna</a></li>
-                                        <li><a href="#portfolio">Moje zamówienie</a></li>
+                                        <li><a href="orders/pokaz-moje-zamowienie">Moje zamówienie</a></li>
 										<li><a href="/#portfolio">Gotowe kanapki</a></li>
                                         <li><a href="#footer">Kontakt</a></li>
                                     </ul>
