@@ -6,12 +6,12 @@ from .models import User
 EMPTY_ELEMENT = "Pole %s nie może być puste"
 
 class RegisterForm(forms.ModelForm):
-    # password = forms.CharField(widget=forms.PasswordInput())
-    # password2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput())
+    password = forms.CharField(widget=forms.PasswordInput())
+    password2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput())
 
     class Meta:
         model = User
-        fields = ('email','name', 'surname', 'password')
+        fields = ('email','name', 'surname')
         widgets = {
                 'email': forms.fields.EmailInput(attrs={
                     'placeholder':'wpisz adres email',}),
@@ -30,6 +30,10 @@ class RegisterForm(forms.ModelForm):
         if qs.exists():
             raise forms.ValidationError("Email jest zajęty.")
         return email
+
+    def save(self, commit=True):
+        user = User
+        User.objects.create_user(email=self.clean_email(), password=self.clean_password2())
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
