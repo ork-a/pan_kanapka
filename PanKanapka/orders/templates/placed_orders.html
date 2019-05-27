@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section  id="test" style="padding-top: 90px"></section>
+<div></div>
+<section>
+    <div class="row">
+        <table class="table table-hover table-bordered text-center">
+            <tr class="text-center">
+                <th>Kanapka</th>
+                <th>Ilość</th>
+                <th>Cena</th>
+            </tr>
+            {% for item in order %}
+            <tr>
+                <td>
+                    {{ item.sandwich.name }}
+                </td>
+                <td>
+                    {{item.quantity}}
+                </td>
+                <td>{{ item.sandwich.price }} PLN</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan=3>Nie złożyłeś jeszcze żadnego zamówienia.</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                {% if price_total %}
+                <td colspan=2>
+                    <strong class="pull-right">W sumie:</strong>
+                </td>
+
+                <td colspan=1>
+                    <strong>{{ price_total }} PLN</strong>
+                </td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td colspan=2>
+                    <a href="{% url 'sandwiches:sandwiches' %}" class="btn btn-warning pull-left">
+                        Wróć do wyboru kanapek
+                    </a>
+                </td>
+                <td colspan=1>
+                    {% if order.get_order %}
+                    <a href="{% url 'orders:confirm_order' %}" class="pull-right btn btn-primary">Zamów</a>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</section>
+{% endblock %}
+
+
+{% block script %}
+<script>
+$(document).ready (function () {
+    $(".update-quantity").one ('click', function (e) {
+        var url_quantity =  $(this).attr('href');
+        var regex_quantity = /(\d+)(?!.*\d)/;
+        this.href = url_quantity.replace(regex_quantity, $(this).siblings('input').val())
+    });
+});
+
+
+</script>
+{% endblock script %}

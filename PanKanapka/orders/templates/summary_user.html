@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section  id="koszyk" style="padding-top: 90px"></section>
+ <section>
+   <div class="row">
+    <table class="table table-hover table-bordered text-center">
+      <tr class="text-center">
+        <th>Ilość</th>
+        <th>Kanapka</th>
+        <th>Cena</th>
+      </tr>
+      {% for item in order.get_order %}
+        {% if not item.is_ordered %}
+        <tr>
+          <td>
+            <input value={{item.quantity}}>
+            <a href="{% url 'orders:update_quantity' item.id item.quantity %}" class="btn btn-primary update-quantity">Aktualizuj</a>
+          </td>
+          <td>
+            {{ item.sandwich.name }}
+            <span class="pull-right">
+              <a href="{% url 'orders:delete_sandwich' item.id %}" data-balloon="Usuń kanapkę z koszyka" class="text-danger">
+                <i class="fas fa-trash"></i>
+              </a>
+            </span>
+          </td>
+          <td>{{ item.sandwich.price }} PLN</td>
+        </tr>
+        {% endif %}
+      {% empty %}
+        <tr>
+          <td colspan= 3>Uuu... dzisiaj na głodnego?</td>
+        </tr>
+      {% endfor %}
+      <tr>
+        {% if order.get_total %}
+        <td colspan=2>
+          <strong class="pull-right">W sumie:</strong>
+        </td>
+        
+        <td colspan=1>
+          <strong>{{ order.get_total }} PLN</strong>
+        </td>
+        {% endif %}
+      </tr>
+      <tr>
+        <td colspan=2 >
+          <a href="{% url 'sandwiches:sandwiches' %}" class="btn btn-warning pull-left">
+            Wróć do wyboru kanapek
+          </a> 
+        </td>
+        <td colspan=1>
+          {% if order.get_order %}
+            <a href="{% url 'orders:confirm_order' %}" class="pull-right btn btn-primary">Zamów</a>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+     
+   </div>
+ </section>
+{% endblock %}
+
+
+{% block script %}
+<script>
+$(document).ready (function () {
+    $(".update-quantity").one ('click', function (e) {
+        var url_quantity =  $(this).attr('href');
+        var regex_quantity = /(\d+)(?!.*\d)/;
+        this.href = url_quantity.replace(regex_quantity, $(this).siblings('input').val())
+    });
+});
+</script>
+{% endblock script %}

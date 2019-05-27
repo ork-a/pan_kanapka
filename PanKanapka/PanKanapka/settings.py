@@ -15,6 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -31,8 +32,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'tools.apps.ToolsConfig',
     'clients.apps.ClientsConfig',
-    'bulka.apps.BulkaConfig',
+    'sandwiches.apps.SandwichesConfig',
+    'orders.apps.OrdersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-AUTH_USER_MODEL = 'clients.Uzytkownik'
+AUTH_USER_MODEL = 'clients.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,7 +61,10 @@ ROOT_URLCONF = 'PanKanapka.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 os.path.join(BASE_DIR, 'clients/templates'),
+                 os.path.join(BASE_DIR, 'orders/templates'),
+                 os.path.join(BASE_DIR, 'sandwiches/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,6 +90,7 @@ DATABASES = {
     }
 }
 
+print(os.path.join(BASE_DIR, 'db.sqlite3'))
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -123,7 +130,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-ENV_PATH = os.path.dirname(os.path.abspath(__file__))
-MEDIA_ROOT = os.path.join(ENV_PATH, 'media')
+STATICFILES_DIRS = [(os.path.join(BASE_DIR, "static")),
+                     ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'sandwiches/media')
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+   "django.core.context_processors.request",
+   "django.core.context_processors.media",
+   "django.contrib.messages.context_processors.messages"
+)
