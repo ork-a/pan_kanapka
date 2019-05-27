@@ -16,11 +16,14 @@ def logout_view(request):
 def add_new_user(request):
     form = RegisterForm(data=request.POST)
     if form.is_valid():
-        User.objects.create(
-            email=request.POST['email'],
-            name=request.POST['name'],
-            surname=request.POST['surname'],
-        )
+        user = form.save(commit=False)
+        # User.objects.create(
+        #     email=request.POST['email'],
+        #     name=request.POST['name'],
+        #     surname=request.POST['surname'],
+        # )
+        user.set_password(form['password'])
+        user.save()
         return redirect('login')
     else:
         return render(request, 'add_new_user.html',{

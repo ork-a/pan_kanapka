@@ -11,7 +11,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email','name', 'surname')
+        fields = ('email','name', 'surname', 'password')
         widgets = {
                 'email': forms.fields.EmailInput(attrs={
                     'placeholder':'wpisz adres email',}),
