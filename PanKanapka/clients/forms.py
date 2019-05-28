@@ -32,8 +32,11 @@ class RegisterForm(forms.ModelForm):
         return email
 
     def save(self, commit=True):
-        user = User
-        User.objects.create_user(email=self.clean_email(), password=self.clean_password2())
+        user = super(RegisterForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -41,7 +44,6 @@ class RegisterForm(forms.ModelForm):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Hasła nie są identyczne")
         return password2
-
 
 class UserAdminCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Hasło', widget=forms.PasswordInput)

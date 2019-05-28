@@ -3,6 +3,8 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from flask import render_template
+
 from .forms import RegisterForm
 from .models import User
 
@@ -13,14 +15,19 @@ def logout_view(request):
     return HttpResponseRedirect(request.GET.get('next', '/'))
 
 def add_new_user(request):
-    form = RegisterForm(data=request.POST)
-    if form.is_valid():
-        form.save()
-        return HttpResponse('dziala')
-    else:
-        return render(request, 'add_new_user.html',{
-            'form': form
-        })
+    form = RegisterForm()
+    if request.method == 'POST':
+        form = RegisterForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('dziala')
+        else:
+            return render(request, 'add_new_user.html',{
+                'form': form
+            })
+    return render(request, 'add_new_user.html', {
+        'form': form
+    })
 
 
 @login_required()

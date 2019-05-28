@@ -1,64 +1,68 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.http import HttpRequest
 from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.db.utils import IntegrityError
 from .models import User
-from .views import registration_form
 from .forms import RegisterForm
 
 # Create your tests here.
 
-class CreateUserTest(TestCase):
-
-    def test_saving_and_retriving_new_user(self):
-        first_user = User()
-        first_user.email = 'ppp1@pl.pl'
-        first_user.name = 'pierwszy_name'
-        first_user.surname = 'pierwszy_surname'
-        first_user.active = False
-        first_user.save()
-
-        second_user = User()
-        second_user.email = 'ppp2@pl.pl'
-        second_user.name = 'second_name'
-        second_user.surname = 'second_surname'
-        second_user.active = False
-        second_user.save()
-        saved_users = User.objects.all()
-        self.assertEqual(saved_users.count(), 2)
-
-    def test_website_handle_POST_request(self):
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST['name'] = 'name'
-        response = registration_form(request)
-
-    def test_website_can_save_a_POST_request(self):
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST['email'] = 'ppp@pp.pl'
-        request.POST['name'] = 'ppp'
-        response = registration_form(request)
-        self.assertEqual(User.objects.all().count(), 1)
-
-
-class ListAndModelTest(TestCase):
-    def test_cannot_save_empty_record(self):
-        user = User.objects.create(email='jacek')
-        with self.assertRaises(ValidationError):
-            user.save()
-            user.full_clean()
-
-
-class FormTest(TestCase):
+class RegisterFormTest(TestCase):
 
     def test_form_render_text_input(self):
         form = RegisterForm()
         self.assertIn('wpisz adres email', form.as_p())
 
-    def test_form_for_blank_elements(self):
+    def test_form_for_blank_email(self):
         form =  RegisterForm(data={'email':''})
         self.assertFalse(form.is_valid())
         self.assertEqual(
             form.errors['email'],
             ['Pole adres email nie może być puste']
         )
+
+    def test_empty_form_has_no_error(self):
+        form = RegisterForm()
+        empty_dict = {}
+        self.assertEqual(form.errors, empty_dict)
+
+    # def test_form_for_incorrect_email(self):
+    #     data = {'email': 'jacek'}
+    #     # with self.assertRaises(ValidationError):
+    #     form = RegisterForm(data=data)
+    #     form.full_clean()
+    #     self.assertFalse(form.is_valid())
+
+    def test_duplicate_email(self):
+        data = {'email': 'jacek888@wp.pl',
+                'name': 'jacek',
+                'surname': 'tomczak',
+                'password': 'admin',
+                'password2': 'admin'}
+        form = RegisterForm(data=data)
+        print (form.is_valid())
+        print(form.full_clean())
+
+    def test_two_different_password(self):
+        data = {'email': 'jacek888@wp.pl',
+                'name': 'jacek',
+                'surname': 'tomczak',
+                'password': 'admin',
+                'password2': 'admin2'}
+        form = RegisterForm(data=data)
+        self.assertFalse(form.is_valid())
+
+class RegistrationViewTest(TestCase):
+    client = Client()
+    def test_if_used_registration_form(self):
+        response = self.client.get('/clients/add')
+        self.assertIsInstance(response.context['form'], RegisterForm)
+
+    def test_if_used_registration_template(self):
+        response = self.client.get('/clients/add')
+        self.assertTemplateUsed(response, 'add_new_user.html')
+
+    def test_empty_form_has_no_error(self):
+        response = self.client.get('/clients/add')
+        self.assertNotIn(b'class="errorlist"', response.content)
