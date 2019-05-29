@@ -81,13 +81,13 @@ class RegistrationViewTest(TestCase):
         response = self.client.get('/clients/add')
         self.assertNotIn(b'class="errorlist"', response.content)
 
-    @skip
-    def test_two_different_password(self):
+    def test_correct_registration(self):
         request = HttpRequest()
         request.method = 'POST'
         request.POST['email'] = 'jacek@ppp.pl'
+        request.POST['name'] = 'admin'
+        request.POST['surname'] = 'admin'
         request.POST['password1'] = 'admin'
-        request.POST['password2'] = 'admin2'
+        request.POST['password2'] = 'admin'
         response = add_new_user(request)
-        self.assertIn(b'class="errorlist"', response.content)
-        self.assertIn(b'identyczne', response.content)
+        self.assertIn(b'dziala', response.content)
