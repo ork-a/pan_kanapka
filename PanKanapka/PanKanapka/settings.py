@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'tools.apps.ToolsConfig',
     'clients.apps.ClientsConfig',
     'sandwiches.apps.SandwichesConfig',
-    'orders.apps.OrdersConfig',
+    'orders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

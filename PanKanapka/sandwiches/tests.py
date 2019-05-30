@@ -1,6 +1,7 @@
 from django.test import TestCase
 
 from .models import Sandwich
+from orders.models import OrderSandwiches, Order
 # Create your tests here.
 class TestPlusMinusButton(TestCase):
 
@@ -13,7 +14,14 @@ class TestPlusMinusButton(TestCase):
         sandwich3 = Sandwich(name='Szynka, bez jaj', price=13)
         sandwich3.save()
 
-    def test_first(self):
+    def test_created_sandwiches(self):
         object_list = Sandwich.objects.all()
-        for sandwich in object_list:
-            print(sandwich.id, sandwich.name)
+        self.assertEqual(object_list.count(), 3)
+
+    def test_simple_order(self):
+        sandwich = Sandwich.objects.get(id=1)
+        order = OrderSandwiches(sandwich=sandwich, quantity=2)
+        order.save()
+        order_list = Order()
+        order_list.save()
+        order_list.sandwiches.add(order)
