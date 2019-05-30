@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from django.http import HttpRequest
+from django.http import HttpRequest, QueryDict
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db.utils import IntegrityError
@@ -67,6 +67,23 @@ class RegisterFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors['password2'], ['Hasła nie są identyczne'])
 
+    @skip('email format is checked by HTML5')
+    def test_lot_of_case_incorrect_email(self):
+        base_data = {'name': 'jacek', 'surname':'tomczak', 'password1':'admin', 'password2':'admin',}
+        test_case_email = (
+            {'email': 'jacekwp.pl', 'description':'no at symbol'},
+            {'email': 'jacek@wppl', 'description':'no dot after at'},
+            {'email': '@wp.pl', 'description':'no name in email'},
+            {'email': '', 'description':'no email'},
+        )
+
+        for item in test_case_email:
+            test_case = base_data.copy()
+            test_case.update(item)
+            with self.subTest(msg=test_case['description']):
+                form = RegisterForm(data=test_case)
+                self.assertFalse(form.is_valid())
+
 class RegistrationViewTest(TestCase):
     client = Client()
     def test_if_used_registration_form(self):
@@ -102,3 +119,21 @@ class RegistrationViewTest(TestCase):
         request.POST['password2'] = 'admin2'
         response = add_new_user(request)
         self.assertIn(b'class="errorlist"', response.content)
+
+    def test_lot_of_case_incorrect_email(self):
+        request = HttpRequest()
+        request.POST['name'] = 'admin'
+        request.POST['surname'] = 'admin'
+        request.POST['password1'] = 'admin'
+        request.POST['password2'] = 'admin'
+        test_case_email = (
+            {'email': 'jacekwp.pl', 'description':'no at symbol'},
+            {'email': 'jacek@wppl', 'description':'no dot after at'},
+            {'email': '@wp.pl', 'description':'no name in email'},
+            {'email': '', 'description':'no email'},
+        )
+        for item in test_case_email:
+            request.POST['email'] = item['email']
+            with self.subTest(msg=item['description']):
+                response = add_new_user(request)
+                self.assertNotIn(b'dziala', response.content)
