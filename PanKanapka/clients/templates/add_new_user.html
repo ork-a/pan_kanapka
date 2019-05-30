@@ -11,9 +11,12 @@
         {{ item }}
         {% csrf_token %}
     {% endfor %}
-    {% if form.errors %}
-        <ul>{{form.email.errors}}</ul>
-    {% endif %}
+
+    {%for field in form %}
+
+    {% if field.errors %} <li> {{ field.label }}: {{field.errors}} </li>{%endif %}
+
+    {%endfor %}
     <button type="submit"> OK </button>
 </form>
 </body>

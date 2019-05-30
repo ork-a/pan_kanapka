@@ -91,3 +91,14 @@ class RegistrationViewTest(TestCase):
         request.POST['password2'] = 'admin'
         response = add_new_user(request)
         self.assertIn(b'dziala', response.content)
+
+    def test_password_doesnt_match(self):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['email'] = 'jacek@ppp.pl'
+        request.POST['name'] = 'admin'
+        request.POST['surname'] = 'admin'
+        request.POST['password1'] = 'admin'
+        request.POST['password2'] = 'admin2'
+        response = add_new_user(request)
+        self.assertIn(b'class="errorlist"', response.content)
