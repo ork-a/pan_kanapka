@@ -8,7 +8,7 @@ from clients.models import User
 
 import unittest.mock as mock
 from unittest.mock import MagicMock, PropertyMock
-
+from unittest import skip
 
 class TestPlusMinusButton(TestCase):
 
@@ -34,7 +34,19 @@ class TestPlusMinusButton(TestCase):
         order_list.sandwiches.add(order)
         self.assertIn(order, order_list.sandwiches.all())
 
-    def test_add_sandwich_by_POST_request(self):
+    def test_not_authenticate_user(self):
+        mock = MagicMock()
+        type(mock).is_authenticated = PropertyMock(return_value=False)
+
+        request = HttpRequest()
+        request.method = 'POST'
+        request.user = mock
+        request.POST['id'] = 1
+
+        response = plus_minus_view(request)
+        self.assertEqual('uzytkownik nie zalogowany', response)
+
+    def test_sandwich_order_first_time_by_POST_request(self):
         mock = MagicMock()
         type(mock).is_authenticated = PropertyMock(return_value=True)
 
@@ -45,7 +57,27 @@ class TestPlusMinusButton(TestCase):
 
         sandwich = Sandwich.objects.get(id = 1)
         order_correct = OrderSandwiches(sandwich=sandwich, quantity=1)
-        order_viw = plus_minus_view(request)
-        self.assertEqual(order_correct.quantity, order_viw.quantity)
-        self.assertEqual(order_correct.sandwich, order_viw.sandwich)
+        order_view = plus_minus_view(request)
+        self.assertEqual(order_correct.quantity, order_view.quantity)
+        self.assertEqual(order_correct.sandwich, order_view.sandwich)
 
+        #test second order
+        order_view = plus_minus_view(request)
+        self.assertEqual('w koszyku', order_view)
+
+    @skip
+    def test_sandwich_order_second_time_by_POST_request(self):
+        mock = MagicMock()
+        type(mock).is_authenticated = PropertyMock(return_value=True)
+
+        request = HttpRequest()
+        request.method = 'POST'
+        request.user = mock
+        request.POST['id'] = 1
+
+        sandwich = Sandwich.objects.get(id=request.POST['id'])
+        order_sandwich = OrderSandwiches(sandwich=sandwich, quantity=1)
+        order_sandwich.save()
+
+        response = plus_minus_view(request)
+        self.assertEqual('w koszyku', response)

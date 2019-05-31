@@ -32,6 +32,9 @@ def plus_minus_view(request):
             order_sandwich = OrderSandwiches.objects.filter(sandwich=sandwich)
             if not order_sandwich.exists():
                 new_order = OrderSandwiches(sandwich=sandwich, quantity=1)
+                new_order.save()
                 return new_order
+            else:
+                return 'w koszyku'
         else:
-            return HttpResponse('NIE')
+            return 'uzytkownik nie zalogowany'
