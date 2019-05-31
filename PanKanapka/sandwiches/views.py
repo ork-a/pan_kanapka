@@ -3,11 +3,17 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from orders.models import Order
 from .models import Sandwich
-
+from django.http import HttpResponse
 
 def sandwiches(request):
     object_list = Sandwich.objects.all()
     current_order_products = []
+
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            return HttpResponse('dziala')
+        else:
+            return HttpResponse('NIE')
 
     if request.user.is_authenticated:
         filtered_orders = Order.objects.filter(user=request.user, is_ordered=False)

@@ -1,8 +1,15 @@
 from django.test import TestCase
+from django.http import HttpRequest
 
 from .models import Sandwich
+from .views import sandwiches
 from orders.models import OrderSandwiches, Order
-# Create your tests here.
+from clients.models import User
+
+import unittest.mock as mock
+from unittest.mock import MagicMock, PropertyMock
+
+
 class TestPlusMinusButton(TestCase):
 
     def setUp(self):
@@ -25,3 +32,17 @@ class TestPlusMinusButton(TestCase):
         order_list = Order()
         order_list.save()
         order_list.sandwiches.add(order)
+        self.assertIn(order, order_list.sandwiches.all())
+
+    def test_add_sandwich_by_POST_request(self):
+        mock = MagicMock()
+        type(mock).is_authenticated = PropertyMock(return_value=False)
+
+        request = HttpRequest()
+        request.method = 'POST'
+        request.user = mock
+
+        request.POST['id'] = 1
+        response = sandwiches(request)
+        self.assertIn(b'NIE', response.content)
+
