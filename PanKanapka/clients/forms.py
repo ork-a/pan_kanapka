@@ -1,8 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import UserChangeForm
-
-from django.core.exceptions import ValidationError
 from .models import User
 
 EMPTY_ELEMENT = "Pole %s nie może być puste"
@@ -18,7 +15,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email','name', 'surname')
+        fields = ('email','name', 'surname', 'group')
         widgets = {
                 'email': forms.fields.EmailInput(attrs={
                     'placeholder':'wpisz adres email',}),
