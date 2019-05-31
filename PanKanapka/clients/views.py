@@ -2,8 +2,7 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from flask import render_template
+from django.shortcuts import render
 
 from .forms import RegisterForm
 from .models import User

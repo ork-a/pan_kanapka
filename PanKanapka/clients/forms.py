@@ -23,7 +23,7 @@ class RegisterForm(forms.ModelForm):
                 'email': forms.fields.EmailInput(attrs={
                     'placeholder':'wpisz adres email',}),
                 'name': forms.fields.TextInput (attrs={
-                    'placeholder': 'wpisz imie',}),
+                    'placeholder': 'wpisz imię',}),
                 'surname': forms.fields.TextInput(attrs={
                     'placeholder':'wpisz nazwisko',}),
         }
