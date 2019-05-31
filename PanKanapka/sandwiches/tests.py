@@ -54,6 +54,7 @@ class TestPlusMinusButton(TestCase):
         request.method = 'POST'
         request.user = mock
         request.POST['id'] = 1
+        request.POST['quantity'] = 1
 
         sandwich = Sandwich.objects.get(id = 1)
         order_correct = OrderSandwiches(sandwich=sandwich, quantity=1)
@@ -74,6 +75,7 @@ class TestPlusMinusButton(TestCase):
         request.method = 'POST'
         request.user = mock
         request.POST['id'] = 1
+
 
         sandwich = Sandwich.objects.get(id=request.POST['id'])
         order_sandwich = OrderSandwiches(sandwich=sandwich, quantity=1)
