@@ -28,6 +28,7 @@ def sandwiches(request):
 def plus_minus_view(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
-            return HttpResponse('dziala')
+            sandwich = Sandwich.objects.get(id = request.POST['id'])
+            return HttpResponse(sandwich.name)
         else:
             return HttpResponse('NIE')

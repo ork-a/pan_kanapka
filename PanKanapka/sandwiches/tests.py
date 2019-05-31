@@ -43,6 +43,7 @@ class TestPlusMinusButton(TestCase):
         request.user = mock
 
         request.POST['id'] = 1
+        sandwich = Sandwich.objects.get(id = 1)
         response = plus_minus_view(request)
-        self.assertIn(b'dziala', response.content)
+        self.assertIn(sandwich.name.encode(), response.content)
 
