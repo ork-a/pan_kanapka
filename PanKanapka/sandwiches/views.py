@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from orders.models import Order
+from orders.models import Order, OrderSandwiches
 from .models import Sandwich
 from django.http import HttpResponse
 
@@ -29,6 +29,9 @@ def plus_minus_view(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
             sandwich = Sandwich.objects.get(id = request.POST['id'])
-            return HttpResponse(sandwich.name)
+            order_sandwich = OrderSandwiches.objects.filter(sandwich=sandwich)
+            if not order_sandwich.exists():
+                new_order = OrderSandwiches(sandwich=sandwich, quantity=1)
+                return new_order
         else:
             return HttpResponse('NIE')

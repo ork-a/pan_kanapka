@@ -41,9 +41,11 @@ class TestPlusMinusButton(TestCase):
         request = HttpRequest()
         request.method = 'POST'
         request.user = mock
-
         request.POST['id'] = 1
+
         sandwich = Sandwich.objects.get(id = 1)
-        response = plus_minus_view(request)
-        self.assertIn(sandwich.name.encode(), response.content)
+        order_correct = OrderSandwiches(sandwich=sandwich, quantity=1)
+        order_viw = plus_minus_view(request)
+        self.assertEqual(order_correct.quantity, order_viw.quantity)
+        self.assertEqual(order_correct.sandwich, order_viw.sandwich)
 
