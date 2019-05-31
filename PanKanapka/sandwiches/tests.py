@@ -46,7 +46,7 @@ class TestPlusMinusButton(TestCase):
         response = plus_minus_view(request)
         self.assertEqual('uzytkownik nie zalogowany', response)
 
-    def test_sandwich_order_first_time_by_POST_request(self):
+    def test_same_sandwich_order_multi_time_by_POST_request(self):
         mock = MagicMock()
         type(mock).is_authenticated = PropertyMock(return_value=True)
 
@@ -56,30 +56,18 @@ class TestPlusMinusButton(TestCase):
         request.POST['id'] = 1
         request.POST['quantity'] = 1
 
+        #first order
         sandwich = Sandwich.objects.get(id = 1)
-        order_correct = OrderSandwiches(sandwich=sandwich, quantity=1)
+        correct_sandwich = OrderSandwiches(sandwich=sandwich, quantity=1)
+        correct_quantity = 1
         order_view = plus_minus_view(request)
-        self.assertEqual(order_correct.quantity, order_view.quantity)
-        self.assertEqual(order_correct.sandwich, order_view.sandwich)
+        self.assertEqual(correct_quantity, order_view.quantity)
+        self.assertEqual(correct_sandwich.sandwich, order_view.sandwich)
 
-        #test second order
-        order_view = plus_minus_view(request)
-        self.assertEqual(2, order_view.quantity)
-
-    @skip
-    def test_sandwich_order_second_time_by_POST_request(self):
-        mock = MagicMock()
-        type(mock).is_authenticated = PropertyMock(return_value=True)
-
-        request = HttpRequest()
-        request.method = 'POST'
-        request.user = mock
-        request.POST['id'] = 1
-
-
-        sandwich = Sandwich.objects.get(id=request.POST['id'])
-        order_sandwich = OrderSandwiches(sandwich=sandwich, quantity=1)
-        order_sandwich.save()
-
-        response = plus_minus_view(request)
-        self.assertEqual('w koszyku', response)
+        quantity_value = [1,0,-3,15,2,10,30,]
+        for value in quantity_value:
+            request.POST['quantity'] = value
+            correct_quantity = 1 + value
+            with self.subTest():
+                order_view = plus_minus_view(request)
+                self.assertEqual(correct_quantity, order_view.quantity)
