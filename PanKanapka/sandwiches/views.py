@@ -9,12 +9,6 @@ def sandwiches(request):
     object_list = Sandwich.objects.all()
     current_order_products = []
 
-    if request.method == 'POST':
-        if request.user.is_authenticated:
-            return HttpResponse('dziala')
-        else:
-            return HttpResponse('NIE')
-
     if request.user.is_authenticated:
         filtered_orders = Order.objects.filter(user=request.user, is_ordered=False)
 
@@ -29,3 +23,11 @@ def sandwiches(request):
     }
 
     return render(request, "sandwiches_list.html", context)
+
+
+def plus_minus_view(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            return HttpResponse('dziala')
+        else:
+            return HttpResponse('NIE')

@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.http import HttpRequest
 
 from .models import Sandwich
-from .views import sandwiches
+from .views import sandwiches, plus_minus_view
 from orders.models import OrderSandwiches, Order
 from clients.models import User
 
@@ -18,7 +18,7 @@ class TestPlusMinusButton(TestCase):
         sandwich1.save()
         sandwich2 = Sandwich(name='z jablkiem', price=3)
         sandwich2.save()
-        sandwich3 = Sandwich(name='Szynka, bez jaj', price=13)
+        sandwich3 = Sandwich(name='szynka, bez jaj', price=13)
         sandwich3.save()
 
     def test_created_sandwiches(self):
@@ -36,13 +36,13 @@ class TestPlusMinusButton(TestCase):
 
     def test_add_sandwich_by_POST_request(self):
         mock = MagicMock()
-        type(mock).is_authenticated = PropertyMock(return_value=False)
+        type(mock).is_authenticated = PropertyMock(return_value=True)
 
         request = HttpRequest()
         request.method = 'POST'
         request.user = mock
 
         request.POST['id'] = 1
-        response = sandwiches(request)
-        self.assertIn(b'NIE', response.content)
+        response = plus_minus_view(request)
+        self.assertIn(b'dziala', response.content)
 
