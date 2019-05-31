@@ -35,6 +35,8 @@ def plus_minus_view(request):
                 new_order.save()
                 return new_order
             else:
-                return 'w koszyku'
+                next_order = OrderSandwiches.objects.get(sandwich=sandwich)
+                next_order.quantity += 1
+                return next_order
         else:
             return 'uzytkownik nie zalogowany'

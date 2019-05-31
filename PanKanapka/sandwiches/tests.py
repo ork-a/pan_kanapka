@@ -63,7 +63,7 @@ class TestPlusMinusButton(TestCase):
 
         #test second order
         order_view = plus_minus_view(request)
-        self.assertEqual('w koszyku', order_view)
+        self.assertEqual(2, order_view.quantity)
 
     @skip
     def test_sandwich_order_second_time_by_POST_request(self):
