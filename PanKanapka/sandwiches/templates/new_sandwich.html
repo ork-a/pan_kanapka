@@ -16,13 +16,42 @@
 			</div>
     <form action="moja-kanapka" method="post">
         {% csrf_token %}
-        {% for object in object_list %}
-            <div class="col-md-3 col-sm-4 col-xs-6 single_portfolio_text">
-                <input id="{{ object.id }}" type="checkbox" name="ingredient" value="{{ object.id }}">
-                {{ object.name }}
-	    	</div>
+        {% for ingredient_group, ingredient_list in object_list.items %}
+                <div class="col-md-3 col-sm-4 col-xs-6 {{ ingredient_group }}">
+                    <div style="font-variant: small-caps;">{{ ingredient_group }}</div>
+                    {% for ingredient in ingredient_list %}
+                            <div>
+                                <input id="{{ ingredient.id }}" class="hidden" type="checkbox" name="ingredient" value="{{ ingredient.id }}">
+                                <label class="btn btn-light ingredient_label" for="{{ ingredient.id }}">{{ ingredient }} - {{ingredient.price}}</label>
+                            </div>
+                    {% endfor %}
+	    	    </div>
         {% endfor %}
-        <input type="submit" value="OK">
+        <div class="col-xs-12" style="padding:20px 0">
+            <input class="btn btn-primary pull-right" type="submit" value="Wybieram">
+        </div>
     </form>
     </section>
 {% endblock content %}
+
+{% block script %}
+<script>
+$( document ).ready(function() {
+    $(':checkbox:checked+label').toggleClass('btn-light btn-success');
+});
+
+$(".ingredient_label").click(function() {
+  if ($(this).parents().hasClass('pieczywo')){
+    $(".pieczywo label").removeClass("btn-success");
+    $(this).addClass("btn-success");
+
+    $(".pieczywo input").prop("checked", false);
+
+    }
+
+  else {
+    $(this).toggleClass('btn-light btn-success');
+  }
+});
+</script>
+{% endblock script %}
