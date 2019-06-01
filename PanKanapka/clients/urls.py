@@ -9,4 +9,5 @@ urlpatterns = [
     path('add', views.add_new_user, name='add_new_user'),
     path('logout', views.logout_view, name='logout'),
     path('login', views.login_view, name='login'),
+    path('activate/<slug:id>/<slug:token>/', views.activate, name='activate'),
 ]

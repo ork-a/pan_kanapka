@@ -47,10 +47,11 @@ class User(AbstractBaseUser):
     email = models.CharField(max_length=100, default=None, unique=True)
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=100)
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=False)
     group = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
+    token = models.CharField(max_length=100, default=None, null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
