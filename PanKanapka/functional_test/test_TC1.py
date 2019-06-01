@@ -4,7 +4,7 @@ from unittest import TestCase
 
 from time import sleep
 
-WEB_ADDRESS = 'http://127.0.0.1:8000'
+WEB_ADDRESS = 'http://127.0.0.1:8000/'
 
 class RegistrationTest(TestCase):
     #Użytkownik otwiera przeglarkę
@@ -25,10 +25,11 @@ class RegistrationTest(TestCase):
         input_password_id = self.browser.find_element_by_id('id_password')
         self.assertEqual('password', input_password_id.get_attribute('type'))
         input_password_id.send_keys('test')
-        sleep(2)
         all_buttons = self.browser.find_elements_by_tag_name('button')
         self.browser.find_element_by_class_name('btn-lg2').click()
-        # Przeniesienie na stronę wyboru kanapki
+        # Przeniesienie na stronę glowna
+        current_page_url = self.browser.current_url
+        self.assertEqual(current_page_url, WEB_ADDRESS)
         # Użytkownik klika wyloguj
         # Przeniesienie na stronę główną, wyboru kanapki, bez użytkownika
 
