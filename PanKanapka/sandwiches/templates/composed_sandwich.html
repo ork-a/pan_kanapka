@@ -17,15 +17,40 @@
                         {% csrf_token %}
                         {% for object in object_list %}
                             <div class="col-md-3 col-sm-4 col-xs-6">
-                                <input id="{{ object.id }}" type="checkbox" checked name="ingredient" value="{{ object.id }}">
-                                <label class="btn btn-light" for="{{ object.id }}">{{ object }}</label>
+                                <input id="{{ object.id }}"
+                                       type="checkbox"
+                                       checked
+                                       name="ingredient"
+                                       value="{{ object.id }}"
+                                       {% if object.group.name == 'pieczywo' %}
+                                         disabled
+                                       {% endif %}
+                                >
+                                <label class="btn btn-light" for="{{ object.id }}">
+                                    {{ object }} - <span class="ingredient_price">{{object.price}}</span> PLN
+                                </label>
 	                    	</div>
                         {% endfor %}
+                        <div class="pull-right" style="clear:both; font-weight:600; font-size:18px">
+                            Cena za kanapkę: <span id="total_price">{{ total_price }}</span> PLN
+                        </div>
                         <div class="col-xs-12" style="padding:20px 0">
                             <input class="btn btn-primary pull-right" type="submit" value="Wybieram">
                         </div>
                     </form>
 			</div>
-
     </section>
 {% endblock content %}
+
+{% block script %}
+<script>
+$(":checkbox").change(function() {
+  var total_price = 0
+  $(":checked").each(function(){
+    var price = $(this).siblings().children("span").text()
+    total_price += parseFloat(price);
+  })
+    $('#total_price').text(Math.round(total_price * 100) / 100);
+});
+</script>
+{% endblock script %}

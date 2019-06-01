@@ -44,8 +44,10 @@ def create_sandwich(request):
 def new_sandwich(request):
     ingredients = request.POST.getlist('ingredient')
     object_list = Ingredient.objects.filter(id__in=ingredients)
+    total_price = sum([ingredient.price for ingredient in object_list])
     context = {
         'object_list': object_list,
+        'total_price': total_price
     }
     return render(request, "composed_sandwich.html", context)
 
