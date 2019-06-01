@@ -10,8 +10,10 @@ class RegisterForm(forms.ModelForm):
         'password_mismatch': "Hasła nie są identyczne",
     }
 
-    password1 = forms.CharField(widget=forms.PasswordInput())
-    password2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput())
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+                    'placeholder':'Podaj haslo',}))
+    password2 = forms.CharField(label='Potwierdź hasło', widget =forms.PasswordInput(attrs={
+                    'placeholder':'Potwierdź haslo',}))
 
     class Meta:
         model = User
