@@ -44,33 +44,7 @@
 
     </head>
     <body>
-
         <header id="home" class="navbar-fixed-top">
-            <div class="header_top_menu clearfix">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-5 col-md-offset-3 col-sm-12 text-right">
-                            <div class="call_us_text">
-								<a href=""><i class="fa fa-phone"></i>000 000 000 </a>
-                                <a href=""><i class="fa fa-user-circle" aria-hidden="true"></i></a>
-                                 <a>   {% include 'messages.html' %}
-                        {% if user.is_authenticated %}
-                        Zalogowany jako: {{request.user.name}} - {{ request.user.group.name }}
-                        {% if user.staff %}
-                                    <br> </a>
-                            <a href="{% url 'orders:summary_order' %}">Sprawdź zamówienia zbiorcze</a>
-                        {% endif %}
-                    {% else %}
-                        <a href="{% url 'clients:login' %}?next={{ request.path|urlencode }}">Login</a>
-                    {% endif %}
-
-                       </a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
 
          <div class="main_menu_bg">
                 <div class="container">
@@ -92,30 +66,31 @@
                                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                                     <ul class="nav navbar-nav navbar-right">
+                                    <li>  {% if user.staff %}
+                                        <a href="{% url 'admin:index' %}">Administracja, realizacja zamówień</a>
+                                        {% endif %} </li>
                                         <li><a href="/">Strona główna</a></li>
-                                        <li><a href="/orders/pokaz-moje-zamowienie#test">Moje zamówienie</a></li>
+                                        <li><a href="/orders/pokaz-moje-zamowienie#order">Moje zamówienie</a></li>
 										<li><a href="/#portfolio">Gotowe kanapki</a></li>
                                         <li><a href="/#footer">Kontakt</a></li>
-                                        <li><a> {% include 'messages.html' %}</a> </li>
                                         <li>  {% if user.is_authenticated %}</li>
-                                        <li><a href="{% url 'clients:logout' %}?next={{ request.path|urlencode }}">Logout</a> </li>
+                                        <li><a href="{% url 'clients:logout' %}?next={{ request.path|urlencode }}">
+                                            Logout ({{request.user.name}}) <a>
+                                    <br> </a></a> </li>
                                         <li> <a href="{% url 'orders:summary' %}#koszyk">W koszyku</a> </li>
-                        {% if user.staff %}
-                            <br>
-                            <a href="{% url 'orders:summary_order' %}">Sprawdź zamówienia zbiorcze</a>
-                        {% endif %}
+
                     {% else %}
                         <a href="{% url 'clients:login' %}?next={{ request.path|urlencode }}">Login</a>
                     {% endif %}</li>
                                     </ul>
                                 </div><!-- /.navbar-collapse -->
+                                <div><strong> {% include 'messages.html' %} </strong></div>
                             </div><!-- /.container-fluid -->
                         </nav>
                     </div>
                 </div>
             </div>
         </header> <!-- End Header Section -->
-
         <section id="slider" class="slider">
             <div class="slider_overlay">
                 <div class="container">
