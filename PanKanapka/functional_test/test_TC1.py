@@ -23,19 +23,14 @@ class RegistrationTest(TestCase):
         input_user_id = self.browser.find_element_by_id('id_username')
         input_user_id.send_keys('test@test.pl')
         input_password_id = self.browser.find_element_by_id('id_password')
-        sleep(5)
         self.assertEqual('password', input_password_id.get_attribute('type'))
         input_password_id.send_keys('test')
-        input_password_id.send_keys(Keys.ENTER)
-
-        sleep(20)
-
-
-
-
-    # Przeniesienie na stronę wyboru kanapki
-    # Użytkownik klika wyloguj
-    # Przeniesienie na stronę główną, wyboru kanapki, bez użytkownika
+        sleep(2)
+        all_buttons = self.browser.find_elements_by_tag_name('button')
+        self.browser.find_element_by_class_name('btn-lg2').click()
+        # Przeniesienie na stronę wyboru kanapki
+        # Użytkownik klika wyloguj
+        # Przeniesienie na stronę główną, wyboru kanapki, bez użytkownika
 
     def tearDown(self):
         self.browser.close()
