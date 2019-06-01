@@ -52,12 +52,12 @@
                         <div class="col-md-5 col-md-offset-3 col-sm-12 text-right">
                             <div class="call_us_text">
 								<a href=""><i class="fa fa-phone"></i>000 000 000 </a>
-                                <a href=""><i class="fa fa-user-circle" aria-hidden="true"></i>
-                                    {% include 'messages.html' %}
+                                <a href=""><i class="fa fa-user-circle" aria-hidden="true"></i></a>
+                                 <a>   {% include 'messages.html' %}
                         {% if user.is_authenticated %}
                         Zalogowany jako: {{request.user.name}} - {{ request.user.group.name }}
                         {% if user.staff %}
-                            <br>
+                                    <br> </a>
                             <a href="{% url 'orders:summary_order' %}">Sprawdź zamówienia zbiorcze</a>
                         {% endif %}
                     {% else %}
@@ -96,8 +96,8 @@
                                         <li><a href="/orders/pokaz-moje-zamowienie#test">Moje zamówienie</a></li>
 										<li><a href="/#portfolio">Gotowe kanapki</a></li>
                                         <li><a href="/#footer">Kontakt</a></li>
-                                        <li>    {% include 'messages.html' %}
-                        {% if user.is_authenticated %} </li>
+                                        <li><a> {% include 'messages.html' %}</a> </li>
+                                        <li>  {% if user.is_authenticated %}</li>
                                         <li><a href="{% url 'clients:logout' %}?next={{ request.path|urlencode }}">Logout</a> </li>
                                         <li> <a href="{% url 'orders:summary' %}#koszyk">W koszyku</a> </li>
                         {% if user.staff %}
