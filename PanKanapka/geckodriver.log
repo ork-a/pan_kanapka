@@ -216,3 +216,19 @@ der*
 [GPU 3004, Chrome_
 ###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
 
+1559379243469	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\h5326\\AppData\\Local\\Temp\\rust_mozprofile.pxuTDz3JW26X"
+1559379244335	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1559379244335	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1559379244335	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1559379246990	Marionette	INFO	Listening on port 56702
+1559379247313	Marionette	WARN	TLS certificate errors will be ignored for this session
+1559379253662	Marionette	INFO	Stopped listening on port 56702
+[Child 18160, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 332
+[Child 18160, Chrome_Chi[Parent 13376, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 332
+[Child 14488, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 332
+[Child 1
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+[GPU 15980, 
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
