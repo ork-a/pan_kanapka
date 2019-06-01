@@ -2,7 +2,7 @@
 
 {% block content %}
 <section id="footer_widget" class="footer_widget">
-<section id="portfolio" class="portfolio">
+<section id="login" class="portfolio">
             <div class="container">
                 <div class="row">
                      <div class="main_slider text-center">
@@ -15,6 +15,8 @@
                                     <input type="hidden" name="next" value="{{ request.GET.next }}">
                                   <button type="submit" class="btn-lg2" >Login</button>
                                 </form>
+                                <p></p>
+                                <h6>Nie masz konta? Zarejestruj się przez  <a href="{% url 'clients:add_new_user' %}#add_new_user">formularz rejestracji</a>
                             </div>
 						</div>
 					</div>
