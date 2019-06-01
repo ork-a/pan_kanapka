@@ -88,7 +88,7 @@ def confirm_order(request):
             item.is_ordered = True
             item.save()
     messages.info(request, "Zamówienie zostało złozone. Możesz je podejrzeć w Twoich Zamówieniach.")
-    return redirect(reverse('orders:summary'))
+    return redirect(reverse('orders:show_confirmed_order'))
 
 
 @login_required()
