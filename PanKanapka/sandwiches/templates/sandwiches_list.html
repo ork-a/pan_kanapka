@@ -24,11 +24,7 @@
 							<div>
 								<h6>{{ object.name }}</h6>
 								<p class="product_price">Cena: {{ object.price }} PLN</p>
-								{% if object in current_order_products %}
-								<a href="{% url 'orders:summary' %}" class="btn btn-primary">W koszyku</a>
-								{% else %}
-								 <a class="btn btn-primary" href="{% url 'orders:single_order' object.id%}">Zamów</a>
-								{% endif %}
+								 <a class="btn btn-primary" href="{% url 'orders:single_order' object.id%}#koszyk">Zamów</a>
 							</div>
 						</div>
 					</div>
