@@ -30,8 +30,17 @@ class RegistrationTest(TestCase):
         # Przeniesienie na stronę glowna
         current_page_url = self.browser.current_url
         self.assertEqual(current_page_url, WEB_ADDRESS)
+        #komunikat o poprawnym logowaniu
+        message = self.browser.find_element_by_class_name('messages').text
+        self.assertIn('zalogowany', message)
         # Użytkownik klika wyloguj
+        self.browser.find_element_by_link_text('Logout').click()
         # Przeniesienie na stronę główną, wyboru kanapki, bez użytkownika
+        current_page_url = self.browser.current_url
+        self.assertEqual(current_page_url, WEB_ADDRESS)
+        # komunikat o poprawnym wylogowaniu
+        message = self.browser.find_element_by_class_name('messages').text
+        self.assertIn('wylogowany', message)
 
     def tearDown(self):
         self.browser.close()
