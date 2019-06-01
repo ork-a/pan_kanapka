@@ -72,16 +72,16 @@
                                         <li><a href="/">Strona główna</a></li>
                                         <li><a href="/orders/pokaz-moje-zamowienie#order">Moje zamówienie</a></li>
 										<li><a href="/#portfolio">Gotowe kanapki</a></li>
+                                        <li><a href="/nowa-kanapka#nowe">Własna kanapka </a></li>
                                         <li><a href="/#footer">Kontakt</a></li>
                                         <li>  {% if user.is_authenticated %}</li>
                                         <li><a href="{% url 'clients:logout' %}?next={{ request.path|urlencode }}">
                                             Logout ({{request.user.name}}) <a>
                                     <br> </a></a> </li>
                                         <li> <a href="{% url 'orders:summary' %}#koszyk">W koszyku</a> </li>
-
-                    {% else %}
-                        <a href="{% url 'clients:login' %}?next={{ request.path|urlencode }}">Login</a>
-                    {% endif %}</li>
+                                        {% else %}
+                                            <a href="{% url 'clients:login' %}?next={{ request.path|urlencode }}">Login</a>
+                                        {% endif %}</li>
                                     </ul>
                                 </div><!-- /.navbar-collapse -->
                                 <div><strong> {% include 'messages.html' %} </strong></div>
@@ -103,6 +103,7 @@
                                     <i class="fa fa-arrow-right" aria-hidden="true"></i>  Wypełnij formularz
                                     <i class="fa fa-arrow-right" aria-hidden="true"></i>  Zapłać gotówką
                                     <i class="fa fa-arrow-right" aria-hidden="true"></i>  Odbierz kanapkę</p>
+                                    <p>*zamów do godziny 8 a otrzymasz kanapkę tego samego dnia</p>
                                 </div>
                             </div>
                         </div>
