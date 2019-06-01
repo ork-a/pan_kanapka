@@ -47,14 +47,19 @@ class DbManager:
     def import_sandwiches(self):
         with open(self.sandwiches_csv_name) as sandwiches_csv_file:
             csv_reader = csv.reader(sandwiches_csv_file, delimiter=',')
-            for name, price, accessible, image_filename in csv_reader:
+            for name, price, accessible, image_filename, ingredient_names in csv_reader:
                 sandwich = Sandwich()
                 sandwich.name = name
                 sandwich.price = price
                 sandwich.accessible = accessible
-#                sandwich.ingredients.set(None)
-#               filename ="s1"
                 sandwich.image = "/sandwiches/images/{}".format(image_filename)
+                sandwich.save()
+                ingredient_list = ingredient_names.split("|")
+                for ingredient_name in ingredient_list:
+                    ingredient_name = ingredient_name.strip()
+                    if Ingredient.objects.filter(name=ingredient_name).exists():
+                        ingredient = Ingredient.objects.get(name=ingredient_name)
+                        sandwich.ingredients.add(ingredient)
                 sandwich.save()
 
     def import_companies(self):
