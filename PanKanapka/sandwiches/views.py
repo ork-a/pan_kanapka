@@ -1,8 +1,11 @@
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from orders.models import Order
-from .models import Sandwich
+from django.shortcuts import redirect, render
+from django.urls import reverse
+
+from orders.models import Order, OrderSandwiches
+from .models import Sandwich, Ingredient
+
 
 
 def sandwiches(request):
@@ -21,5 +24,46 @@ def sandwiches(request):
         'object_list': object_list,
         'current_order_products': current_order_products
     }
-
     return render(request, "sandwiches_list.html", context)
+
+
+@login_required()
+def create_sandwich(request):
+    object_list = Ingredient.objects.all()
+    context = {
+        'object_list': object_list,
+    }
+
+    return render(request, "new_sandwich.html", context)
+
+
+@login_required()
+def new_sandwich(request):
+    ingredients = request.POST.getlist('ingredient')
+    object_list = Ingredient.objects.filter(id__in=ingredients)
+    context = {
+        'object_list': object_list,
+    }
+    return render(request, "composed_sandwich.html", context)
+
+
+@login_required()
+def confirm_new_sandwich(request):
+    ingredients = request.POST.getlist('ingredient')
+    object_list = Ingredient.objects.filter(id__in=ingredients)
+    sandwich = Sandwich()
+    sandwich.name = "Kanapka oryginalna"
+    sandwich.price = sum([ingredient.price for ingredient in object_list])
+    sandwich.accessible = False
+    sandwich.image = "/sandwiches/images/s1.jpg"
+    sandwich.save()
+
+    for ingredient in object_list:
+        sandwich.ingredients.add(ingredient)
+
+    order_item, status = OrderSandwiches.objects.get_or_create(sandwich=sandwich, user=request.user)
+    user_order, status = Order.objects.get_or_create(user=request.user, is_ordered=False)
+    user_order.sandwiches.add(order_item)
+    if status:
+        user_order.save()
+    return redirect(reverse('orders:summary'))

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ message }}
+<section id="portfolio" class="portfolio">
+            <div class="container">
+                <div class="row">
+                    <div class="main_slider text-center">
+                        <div class="col-md-12">
+                            <div class="head_title text-center">
+                                <h3>Składniki w Twojej kanapce:</h3>
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+    <form action="potwierdz-nowa-kanapke" method="post">
+        {% csrf_token %}
+        {% for object in object_list %}
+            <div class="col-md-3 col-sm-4 col-xs-6 single_portfolio_text">
+                <input id="{{ object.id }}" type="checkbox" name="ingredient" value="{{ object.id }}">
+                {{ object.name }}
+	    	</div>
+        {% endfor %}
+        <input type="submit" value="OK">
+    </form>
+    </section>
+{% endblock content %}

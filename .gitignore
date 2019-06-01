@@ -1,0 +1,12 @@
+.idea/**/workspace.xml
+.idea/**/pylint.xml
+.idea/**/vcs.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+venv/
+*.pyc
+db.sqlite3
+sqlite3.exe
+
