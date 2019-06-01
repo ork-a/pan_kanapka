@@ -21,14 +21,38 @@
                     <div style="font-variant: small-caps;">{{ ingredient_group }}</div>
                     {% for ingredient in ingredient_list %}
                             <div>
-                                <input id="{{ ingredient.id }}" class="hidden" type="checkbox" name="ingredient" value="{{ ingredient.id }}">
-                                <label class="btn btn-light ingredient_label" for="{{ ingredient.id }}">{{ ingredient }} - {{ingredient.price}}</label>
+                                <input id="{{ ingredient.id }}"
+                                       class="hidden"
+                                       type="checkbox"
+                                       name="ingredient"
+                                       value="{{ ingredient.id }}">
+                                <label class="btn btn-light ingredient_label"
+                                       for="{{ ingredient.id }}">
+                                    {{ ingredient }} - <span class="ingredient_price">{{ingredient.price}}</span> PLN
+                                </label>
                             </div>
                     {% endfor %}
 	    	    </div>
         {% endfor %}
+        <div class="pull-right" style="clear:both; font-weight:600; font-size:18px">
+            Cena za kanapkę: <span id="total_price"> 0</span> PLN
+        </div>
         <div class="col-xs-12" style="padding:20px 0">
-            <input class="btn btn-primary pull-right" type="submit" value="Wybieram">
+            <input class="btn btn-primary pull-right"
+                   type="submit"
+                   data-toggle="popover"
+                   data-trigger="focus"
+                   title="Wybieram"
+                   data-content="And here's some amazing content. It's very engaging. Right?"
+                   value="Wybieram"
+                   style="margin-bottom:15px">
+
+            <div class="alert alert-danger"
+                 id="bread_obligatory"
+                 role="alert"
+                 style="display:none; clear:both">Musisz wybrać pieczywo do kanapki
+            </div>
+
         </div>
     </form>
     </section>
@@ -37,18 +61,33 @@
 {% block script %}
 <script>
 $( document ).ready(function() {
-    $(':checkbox:checked+label').toggleClass('btn-light btn-success');
+  $(':checkbox:checked+label').toggleClass('btn-light btn-success');
+
+  $(".btn-primary").click(function(e) {
+    if (!$('.pieczywo input:checked').length){
+      e.preventDefault();
+      $('#bread_obligatory').show();
+    }
+  });
+
+  $('#bread_obligatory').click(function() {$(this).hide();})
+
+  $(":checkbox").change(function() {
+    var total_price = 0
+    $(":checked").each(function(){
+      var price = $(this).siblings().children("span").text()
+      total_price += parseFloat(price);
+    })
+    $('#total_price').text(Math.round(total_price * 100) / 100);
+});
+
 });
 
 $(".ingredient_label").click(function() {
   if ($(this).parents().hasClass('pieczywo')){
     $(".pieczywo label").removeClass("btn-success");
     $(this).addClass("btn-success");
-
-    $(".pieczywo input").prop("checked", false);
-
-    }
-
+    $(".pieczywo input").prop("checked", false);}
   else {
     $(this).toggleClass('btn-light btn-success');
   }
