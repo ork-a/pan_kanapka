@@ -2,7 +2,8 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from .forms import RegisterForm
 from .models import User
@@ -19,7 +20,8 @@ def add_new_user(request):
         form = RegisterForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse('dziala')
+            messages.info(request, "Zostales zarejestrowany")
+            return redirect(reverse('clients:login'))
         else:
             return render(request, 'add_new_user.html',{
                 'form': form
