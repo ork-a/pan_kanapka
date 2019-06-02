@@ -10,7 +10,9 @@ import unittest.mock as mock
 from unittest.mock import MagicMock, PropertyMock
 from unittest import skip
 
-class TestPlusMinusButton(TestCase):
+
+
+class TestSandwichView(TestCase):
 
     def setUp(self):
         # create sandwich
@@ -81,3 +83,12 @@ class TestPlusMinusButton(TestCase):
 
         response = plus_minus_view(request)
         self.assertEqual('w koszyku', response)
+
+    def test_sandwich_list(self):
+        request = HttpRequest()
+        user_mock = MagicMock()
+        type(user_mock).active = PropertyMock(return_value=True)
+        type(user_mock).is_authenticated = PropertyMock(return_value=False)
+        request.user = user_mock
+        sandwiches(request)
+        # self.assertTemplateUsed(response, "sandwiches_list.html")
