@@ -39,13 +39,21 @@ class DbManager:
     def import_ingredients(self):
         with open(self.ingredients_csv_name, encoding="utf-8") as ingredients_csv_file:
             csv_reader = csv.reader(ingredients_csv_file, delimiter=',')
-            for name, ingredient_group_name, calories_per_portion, portion_size_grams, price in csv_reader:
+            for name, ingredient_group_name, calories_per_portion, portion_size_grams, price, allergen_names in csv_reader:
                 ingredient = Ingredient()
                 ingredient.name = name
                 ingredient.group = IngredientGroup.objects.get(name=ingredient_group_name)
                 ingredient.calories_per_portion = calories_per_portion
                 ingredient.portion_size_grams = portion_size_grams
                 ingredient.price = price
+                ingredient.save()
+                allergen_list = allergen_names.split("|")
+                for allergen_name in allergen_list:
+                    allergen_name = allergen_name.strip()
+                    if allergen_name:
+                        if Allergen.objects.filter(name=allergen_name).exists():
+                            allergen = Allergen.objects.get(name=allergen_name)
+                            ingredient.allergen.add(allergen)
                 ingredient.save()
 
     def import_sandwiches(self):
