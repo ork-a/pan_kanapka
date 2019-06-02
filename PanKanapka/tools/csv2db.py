@@ -91,7 +91,7 @@ class DbManager:
                 client.email = email
                 client.name = name
                 client.surname = surname
-                if admin:
+                if admin in ['True', 'true']:
                     client.set_password('admin')
                 else:
                     client.set_password('user')
