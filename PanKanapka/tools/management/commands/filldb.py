@@ -9,6 +9,8 @@ class Command(BaseCommand):
 
     def handle(self, **options):
         db_manager = DbManager()
+        db_manager.delete_all()
+        self.stdout.write(self.style.SUCCESS('Databases cleaned'))
         db_manager.import_allergens()
         self.stdout.write(self.style.SUCCESS('Allergens populated'))
         db_manager.import_ingredient_groups()
@@ -20,4 +22,4 @@ class Command(BaseCommand):
         db_manager.import_companies()
         self.stdout.write(self.style.SUCCESS('Companies populated'))
         db_manager.import_clients()
-        self.stdout.write(self.style.SUCCESS('Clients populated'))
+        self.stdout.write(self.style.SUCCESS('Clients populated, admin user: admin@kanapka.com, password: admin'))
