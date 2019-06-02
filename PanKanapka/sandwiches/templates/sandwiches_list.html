@@ -38,6 +38,21 @@
 							<div>
 								<h6>{{ object.name }}</h6>
 								<p class="product_price">Cena: {{ object.price }} PLN</p>
+                                {% for key, value in ingredients_list.items %}
+                                {% if key == object.id %}
+                                <p class="product_price">Składniki:
+								    {% for skladnik in value %}
+                                    {{ skladnik }}
+                                    {% endfor %}
+                                    </p>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% for key, value in allergens_list.items %}
+                                {% if key == object.id %}
+                                <p class="product_price">Alergeny: {{value }} </p>
+                                {% endif %}
+                                {% endfor %}
 								 <a class="btn btn-primary" href="{% url 'orders:single_order' object.id%}#koszyk">Zamów</a>
 							</div>
 						</div>
@@ -46,4 +61,8 @@
         {% endif %}
     {% endfor %}
     </section>
+<div>
+    ALLERGENY
+    {{ allergens_list }}
+</div>
 {% endblock content %}

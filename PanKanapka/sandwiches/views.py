@@ -1,15 +1,24 @@
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
-from django.urls import reverse
-
+from django.shortcuts import render
 from orders.models import Order, OrderSandwiches
-from .models import Sandwich, Ingredient, IngredientGroup
-
+from .models import Sandwich
 
 def sandwiches(request):
     object_list = Sandwich.objects.all()
     current_order_products = []
+    ingredients_list ={}
+    allergens_list ={}
+    for object in object_list:
+        ingredients_list[object.id] = object.ingredients.all()
+        lista = []
+        for ingredient in ingredients_list[object.id]:
+            for a in ingredient.allergen.all():
+                lista.append(a.name)
+                lista = list(set(lista))
+                lista_str = ', '.join(lista)
+
+        allergens_list[object.id] = lista_str
 
     if request.user.is_authenticated:
         filtered_orders = Order.objects.filter(user=request.user, is_ordered=False)
@@ -21,8 +30,11 @@ def sandwiches(request):
 
     context = {
         'object_list': object_list,
-        'current_order_products': current_order_products
+        'current_order_products': current_order_products,
+        'ingredients_list': ingredients_list,
+        'allergens_list': allergens_list,
     }
+
     return render(request, "sandwiches_list.html", context)
 
 
@@ -72,3 +84,20 @@ def confirm_new_sandwich(request):
     if status:
         user_order.save()
     return redirect(reverse('orders:summary'))
+
+
+def plus_minus_view(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            sandwich = Sandwich.objects.get(id = request.POST['id'])
+            order_sandwich = OrderSandwiches.objects.filter(sandwich=sandwich)
+            if not order_sandwich.exists():
+                new_order = OrderSandwiches(sandwich=sandwich, quantity=1)
+                new_order.save()
+                return new_order
+            else:
+                next_order = OrderSandwiches.objects.get(sandwich=sandwich)
+                next_order.quantity += 1
+                return next_order
+        else:
+            return 'uzytkownik nie zalogowany'
