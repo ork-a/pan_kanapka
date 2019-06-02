@@ -1,11 +1,8 @@
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
-from django.urls import reverse
-
+from django.shortcuts import render
 from orders.models import Order, OrderSandwiches
-from .models import Sandwich, Ingredient, IngredientGroup
-
+from .models import Sandwich
 
 def sandwiches(request):
     object_list = Sandwich.objects.all()
@@ -23,6 +20,7 @@ def sandwiches(request):
         'object_list': object_list,
         'current_order_products': current_order_products
     }
+
     return render(request, "sandwiches_list.html", context)
 
 
@@ -72,3 +70,20 @@ def confirm_new_sandwich(request):
     if status:
         user_order.save()
     return redirect(reverse('orders:summary'))
+
+
+def plus_minus_view(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            sandwich = Sandwich.objects.get(id = request.POST['id'])
+            order_sandwich = OrderSandwiches.objects.filter(sandwich=sandwich)
+            if not order_sandwich.exists():
+                new_order = OrderSandwiches(sandwich=sandwich, quantity=1)
+                new_order.save()
+                return new_order
+            else:
+                next_order = OrderSandwiches.objects.get(sandwich=sandwich)
+                next_order.quantity += 1
+                return next_order
+        else:
+            return 'uzytkownik nie zalogowany'
