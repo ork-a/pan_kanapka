@@ -83,7 +83,10 @@ class DbManager:
                 client.email = email
                 client.name = name
                 client.surname = surname
-                client.set_password('user')
+                if admin:
+                    client.set_password('admin')
+                else:
+                    client.set_password('user')
                 client.active = active
                 company = Company.objects.get(name=company_name)
                 client.group = company
@@ -91,12 +94,13 @@ class DbManager:
                 client.admin = admin
                 client.save()
 
-    def delete_orders(selfself):
+    def delete_orders(self):
         Order.objects.all().delete()
         OrderSandwiches.objects.all().delete()
 
     def delete_clients(self):
-        User.objects.exclude(email="admin@kanapka.com").delete()
+        User.objects.all().delete()
+        #User.objects.exclude(email="admin@kanapka.com").delete()
 
     def delete_companies(self):
         Company.objects.all().delete()
@@ -112,3 +116,12 @@ class DbManager:
 
     def delete_sandwiches(self):
         Sandwich.objects.all().delete()
+
+    def delete_all(self):
+        self.delete_orders()
+        self.delete_clients()
+        self.delete_companies()
+        self.delete_allergens()
+        self.delete_ingredients()
+        self.delete_ingredient_groups()
+        self.delete_sandwiches()
