@@ -22,6 +22,7 @@ class Order(models.Model):
     is_ordered = models.BooleanField(default=False)
     sandwiches = models.ManyToManyField(OrderSandwiches)
     date_ordered = models.DateTimeField(auto_now=True)
+    remarks = models.TextField(max_length=300, blank=True, null=True)
 
     def get_order(self):
         return self.sandwiches.all()

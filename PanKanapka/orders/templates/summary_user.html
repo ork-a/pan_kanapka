@@ -3,7 +3,9 @@
 {% block content %}
 <section  id="koszyk" style="padding-top: 90px"></section>
  <section>
+   <div class="container">
    <div class="row">
+     <form action="http://localhost:8000/orders/potwierdz-zamowienie/" method="post">
     <table class="table table-hover table-bordered text-center">
       <tr class="text-center">
         <th>Ilość</th>
@@ -45,6 +47,11 @@
         {% endif %}
       </tr>
       <tr>
+        <td>
+        <textarea rows="4" cols="50" name="order_remarks">Uwagi do zamówienia.</textarea>
+        </td>
+      </tr>
+      <tr>
         <td colspan=2 >
           <a href="{% url 'sandwiches:sandwiches' %}" class="btn btn-warning pull-left">
             Wróć do wyboru kanapek
@@ -52,12 +59,20 @@
         </td>
         <td colspan=1>
           {% if order.get_order %}
-            <a href="{% url 'orders:confirm_order' %}" class="pull-right btn btn-primary">Zamów</a>
+
+              {% csrf_token %}
+              <input class="btn btn-primary pull-right"
+                   type="submit"
+                   title="Zamów"
+                   value="Zamów"
+                   style="margin-bottom:15px">
+
           {% endif %}
         </td>
       </tr>
     </table>
-     
+     </form>
+   </div>
    </div>
  </section>
 {% endblock %}
