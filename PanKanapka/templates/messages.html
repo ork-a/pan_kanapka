@@ -1,21 +1,12 @@
 {% if messages %}
-
- 	<style type="text/css">
- 		div.messages{
- 			background-color: #ff6b6b;
- 			color: #f7fff7;
- 		}
- 		ul.messages{
- 			list-style-type: none;
- 		}
- 	</style>
-
-    <div class='messages'>
-        <ul class="messages">
+<div class="alert alert-warning alert-dismissible" role="alert"  position=-webkit-sticky
+  position = sticky>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
             {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{% if "html_safe" in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}</li>
-            {% endfor %}
-        </ul>
+    <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{% if "html_safe" in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}</div>
+           {% endfor %}
+</div>
 
-    </div>
 {% endif %}

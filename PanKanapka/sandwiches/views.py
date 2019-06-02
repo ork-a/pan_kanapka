@@ -4,8 +4,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from orders.models import Order, OrderSandwiches
-from .models import Sandwich, Ingredient
-
+from .models import Sandwich, Ingredient, IngredientGroup
 
 
 def sandwiches(request):
@@ -29,9 +28,13 @@ def sandwiches(request):
 
 @login_required()
 def create_sandwich(request):
-    object_list = Ingredient.objects.all()
+    sorted_ingredients = {}
+    ingredient_groups = IngredientGroup.objects.all()
+    for ingredient_group in ingredient_groups:
+        ingredients_of_group = Ingredient.objects.filter(group=ingredient_group)
+        sorted_ingredients.update({ ingredient_group.name: ingredients_of_group })
     context = {
-        'object_list': object_list,
+        'object_list': sorted_ingredients,
     }
 
     return render(request, "new_sandwich.html", context)
@@ -41,8 +44,10 @@ def create_sandwich(request):
 def new_sandwich(request):
     ingredients = request.POST.getlist('ingredient')
     object_list = Ingredient.objects.filter(id__in=ingredients)
+    total_price = sum([ingredient.price for ingredient in object_list])
     context = {
         'object_list': object_list,
+        'total_price': total_price
     }
     return render(request, "composed_sandwich.html", context)
 

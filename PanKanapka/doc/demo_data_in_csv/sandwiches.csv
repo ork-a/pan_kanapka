@@ -1,9 +1,9 @@
-z kotletem wieprzowym,8.0,True,wieprz600.jpg
-z kotletem wolowym,9.0,True,wol600.jpg
-z grillowanym kurczakiem,7.0,True,kurczak600.jpg
-z kotletem rybnym,9.0,True,ryba600.jpg
-z kotletem sojowym,6.0,False,wegan600.jpg
-z serem,5.0,True,ser600.jpg
-z pasta twarogowa,5.0,False,twarog600.jpg
-z pasta jajeczna,6.0,True,pasta300.jpg
-wegetarianska,7.0,True,wegan600.jpg
+z kotletem wieprzowym,8.0,True,wieprz600.jpg,Bulka pszenna M|Kotlet wieprzowy|Pomidor|Rukola|Papryka
+z kotletem wolowym,9.0,True,wol600.jpg,Bulka pszenna M|Kotlet wolowy|Rzodkiewka|Cebula|Papryka
+z grillowanym kurczakiem,7.0,True,Grillowany kurczak600.jpg,Bulka pszenna M|Kurczak|Szczypiorek|Rukola|Papryka
+z kotletem rybnym,9.0,True,ryba600.jpg,Bulka pszenna M|Kotlet rybny|Pomidor|Rukola|Papryka
+z kotletem sojowym,6.0,False,wegan600.jpg,Bulka pszenna XL|Kotlet sojowy|Pomidor|Rukola|Papryka
+z serem,5.0,True,ser600.jpg,Bulka pszenna M|Ser|Pomidor|Rukola|Papryka
+z pasta twarogowa,5.0,True,twarog600.jpg,Bulka pszenna M|Pasta twarogowa|Pomidor|Rukola|Papryka
+z pasta jajeczna,6.0,True,pasta300.jpg,Bulka pszenna M|Pasta jajeczna|Pomidor|Rukola|Papryka
+wegetarianska,7.0,True,wegan600.jpg,Bulka bezglutenowa M|Rukola|Pomidor|Szczypiorek|Papryka

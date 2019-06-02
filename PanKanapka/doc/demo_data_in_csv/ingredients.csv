@@ -1,35 +1,35 @@
-Pasta jajeczna,420,150,4.50
-Pasta twarogowa,100,150,3.60
-Masło orzechowe,695,50,3.50
-Ser żółty,380,150,4.50
-Ser feta,220,150,2.50
-Mozzarella,250,150,4.05
-Pomidor,20,50,4.90
-Ogórek świeży,13,50,5.50
-Ogórek kiszony,11,50,3.30
-Cebula,33,10,2.80
-Sałata masłowa,14,5,4.60
-Rukola,25,5,2.50
-Rzodkiewka,18,18,1.50
-Papryka,32,30,2.50
-Szczypiorek,35,5,3.50
-Pasta z pomidorów suszonych,213,40,5.50
-Masło,740,10,0.50
-Ketchup,100,15,0.50
-Majonez,660,25,0.55
-Awokado,170,15,2.60
-Oliwki zielone,130,10,5.50
-Ananas,62,15,3.50
-Nutella,540,30,2.55
-Croissant,410,65,4.50
-Grillowany kurczak,120,50,4.5
-Kotlet wieprzowy,390,150,4.5
-Kotlet wołowy,390,150,4.5
-Kotlet rybny,390,150,4.5
-Kotlet sojowy,390,150,4.5
-Bułka pszenna M,300,60,4.5
-Bułka pszenna XL,300,120,3.8
-Bułka z ziarnami M,325,60,3.5
-Bułka z ziarnami XL,325,120,3.5
-Bułka bezglutenowa M,250,60,4.5
-Bułka bezglutenowa XL,250,120,4.5
+Pasta jajeczna,nabial,420,150,4.50
+Pasta twarogowa,nabial,100,150,3.60
+Maslo orzechowe,nabial,695,50,3.50
+Ser zolty,nabial,380,150,4.50
+Ser feta,nabial,220,150,2.50
+Mozzarella,nabial,250,150,4.05
+Pomidor,warzywa,20,50,4.90
+Ogorek swiezy,warzywa,13,50,5.50
+Ogorek kiszony,warzywa,11,50,3.30
+Cebula,dodatki,33,10,2.80
+Salata maslowa,warzywa,14,5,4.60
+Rukola,warzywa,25,5,2.50
+Rzodkiewka,dodatki,18,18,1.50
+Papryka,warzywa,32,30,2.50
+Szczypiorek,dodatki,35,5,3.50
+Pasta z pomidorow suszonych,dodatki,213,40,5.50
+Maslo,dodatki,740,10,0.50
+Ketchup,dodatki,100,15,0.50
+Majonez,dodatki,660,25,0.55
+Awokado,warzywa,170,15,2.60
+Oliwki zielone,dodatki,130,10,5.50
+Ananas,warzywa,62,15,3.50
+Nutella,dodatki,540,30,2.55
+Croissant,pieczywo,410,65,4.50
+Grillowany kurczak,mieso,120,50,4.5
+Kotlet wieprzowy,mieso,390,150,4.5
+Kotlet wolowy,mieso,390,150,4.5
+Kotlet rybny,mieso,390,150,4.5
+Kotlet sojowy,mieso,390,150,4.5
+Bulka pszenna M,pieczywo,300,60,4.5
+Bulka pszenna XL,pieczywo,300,120,3.8
+Bulka z ziarnami M,pieczywo,325,60,3.5
+Bulka z ziarnami XL,pieczywo,325,120,3.5
+Bulka bezglutenowa M,pieczywo,250,60,4.5
+Bulka bezglutenowa XL,pieczywo,250,120,4.5

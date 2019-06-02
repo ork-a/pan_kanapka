@@ -88,13 +88,16 @@ def confirm_order(request):
             item.is_ordered = True
             item.save()
     messages.info(request, "Zamówienie zostało złozone. Możesz je podejrzeć w Twoich Zamówieniach.")
-    return redirect(reverse('orders:summary'))
+    return redirect(reverse('orders:show_confirmed_order'))
 
 
 @login_required()
 def show_confirmed_order(request):
     ordered_items = get_user_ordered_items(request)
-    price_total = sum([item.sandwich.price * item.quantity for item in ordered_items])
+    if ordered_items:
+        price_total = sum([item.sandwich.price * item.quantity for item in ordered_items])
+    else:
+        price_total = 0
     context = {
         'order': ordered_items,
         'price_total': price_total

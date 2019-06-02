@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section  id="test" style="padding-top: 90px"></section>
+<section  id="order" style="padding-top: 90px"></section>
 <div></div>
 <section>
     <div class="row">
@@ -11,21 +11,23 @@
                 <th>Ilość</th>
                 <th>Cena</th>
             </tr>
-            {% for item in order %}
-            <tr>
-                <td>
-                    {{ item.sandwich.name }}
-                </td>
-                <td>
-                    {{item.quantity}}
-                </td>
-                <td>{{ item.sandwich.price }} PLN</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan=3>Nie złożyłeś jeszcze żadnego zamówienia.</td>
-            </tr>
-            {% endfor %}
+            {% if order %}
+                {% for item in order %}
+                <tr>
+                    <td>
+                        {{ item.sandwich.name }}
+                    </td>
+                    <td>
+                        {{item.quantity}}
+                    </td>
+                    <td>{{ item.sandwich.price }} PLN</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan=3>Nie złożyłeś jeszcze żadnego zamówienia.</td>
+                </tr>
+            {% endif %}
             <tr>
                 {% if price_total %}
                 <td colspan=2>
