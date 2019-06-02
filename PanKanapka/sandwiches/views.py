@@ -7,6 +7,18 @@ from .models import Sandwich
 def sandwiches(request):
     object_list = Sandwich.objects.all()
     current_order_products = []
+    ingredients_list ={}
+    allergens_list ={}
+    for object in object_list:
+        ingredients_list[object.id] = object.ingredients.all()
+        lista = []
+        for ingredient in ingredients_list[object.id]:
+            for a in ingredient.allergen.all():
+                lista.append(a.name)
+                lista = list(set(lista))
+                lista_str = ', '.join(lista)
+
+        allergens_list[object.id] = lista_str
 
     if request.user.is_authenticated:
         filtered_orders = Order.objects.filter(user=request.user, is_ordered=False)
@@ -18,7 +30,9 @@ def sandwiches(request):
 
     context = {
         'object_list': object_list,
-        'current_order_products': current_order_products
+        'current_order_products': current_order_products,
+        'ingredients_list': ingredients_list,
+        'allergens_list': allergens_list,
     }
 
     return render(request, "sandwiches_list.html", context)

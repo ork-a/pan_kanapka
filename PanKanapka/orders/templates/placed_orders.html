@@ -4,6 +4,7 @@
 <section  id="order" style="padding-top: 90px"></section>
 <div></div>
 <section>
+    <div class="container">
     <div class="row">
         <table class="table table-hover table-bordered text-center">
             <tr class="text-center">
@@ -39,6 +40,11 @@
                 </td>
                 {% endif %}
             </tr>
+            <tr><td>
+                {% for k in full_order %}
+                    {{k.remarks}}
+                {% endfor %}
+            </td></tr>
             <tr>
                 <td colspan=2>
                     <a href="{% url 'sandwiches:sandwiches' %}" class="btn btn-warning pull-left">
@@ -52,7 +58,7 @@
                 </td>
             </tr>
         </table>
-
+    </div>
     </div>
 </section>
 {% endblock %}
