@@ -14,7 +14,7 @@
 					</div>
 				</div>
 			</div>
-    <form action="moja-kanapka" method="post">
+    <form action="moja-kanapka#nowe" method="post">
         {% csrf_token %}
         {% for ingredient_group, ingredient_list in object_list.items %}
                 <div class="col-md-3 col-sm-4 col-xs-6 {{ ingredient_group }}">
