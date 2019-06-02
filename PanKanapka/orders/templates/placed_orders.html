@@ -8,9 +8,9 @@
     <div class="row">
         <table class="table table-hover table-bordered text-center">
             <tr class="text-center">
-                <th>Kanapka</th>
-                <th>Ilość</th>
-                <th>Cena</th>
+                <th style="text-align:center">Kanapka</th>
+                <th style="text-align:center">Ilość</th>
+                <th style="text-align:center">Cena</th>
             </tr>
             {% if order %}
                 {% for item in order %}
@@ -48,7 +48,7 @@
             <tr>
                 <td colspan=2>
                     <a href="{% url 'sandwiches:sandwiches' %}" class="btn btn-warning pull-left">
-                        Wróć do wyboru kanapek
+                        Wróć do strony głównej
                     </a>
                 </td>
                 <td colspan=1>

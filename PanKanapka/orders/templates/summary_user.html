@@ -7,18 +7,14 @@
    <div class="row">
      <form action="http://localhost:8000/orders/potwierdz-zamowienie/" method="post">
     <table class="table table-hover table-bordered text-center">
-      <tr class="text-center">
-        <th>Ilość</th>
-        <th>Kanapka</th>
-        <th>Cena</th>
+      <tr>
+        <th style="text-align:center">Kanapka</th>
+        <th style="text-align:center">Ilość</th>
+        <th style="text-align:center">Cena</th>
       </tr>
       {% for item in order.get_order %}
         {% if not item.is_ordered %}
         <tr>
-          <td>
-            <input value={{item.quantity}}>
-            <a href="{% url 'orders:update_quantity' item.id item.quantity %}" class="btn btn-primary update-quantity">Aktualizuj</a>
-          </td>
           <td>
             {{ item.sandwich.name }}
             <span class="pull-right">
@@ -27,6 +23,11 @@
               </a>
             </span>
           </td>
+          <td>
+            <input size="5" value={{item.quantity}}>
+            <a href="{% url 'orders:update_quantity' item.id item.quantity %}" class="btn btn-primary update-quantity">Aktualizuj</a>
+          </td>
+
           <td>{{ item.sandwich.price }} PLN</td>
         </tr>
         {% endif %}
@@ -48,14 +49,16 @@
       </tr>
       <tr>
         <td>
-        <textarea rows="4" cols="50" name="order_remarks">Uwagi do zamówienia.</textarea>
+            <a href="{% url 'sandwiches:sandwiches' %}" class="btn btn-warning pull-center">
+            Dodaj kolejną kanapkę
+          </a>
+        </td>
+        <td colspan=2> <strong class="pull-right">
+          <textarea rows="4" cols="50" name="order_remarks">Uwagi do zamówienia.</textarea> </strong>
         </td>
       </tr>
       <tr>
         <td colspan=2 >
-          <a href="{% url 'sandwiches:sandwiches' %}" class="btn btn-warning pull-left">
-            Wróć do wyboru kanapek
-          </a> 
         </td>
         <td colspan=1>
           {% if order.get_order %}
