@@ -100,6 +100,7 @@ def show_confirmed_order(request):
         order = Order.objects.filter(('sandwiches', ordered_items[0]))
     else:
         price_total = 0
+        order = None
     context = {
         'order': ordered_items,
         'price_total': price_total,
