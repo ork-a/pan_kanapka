@@ -2,8 +2,10 @@
 
 {% block content %}
 <section  id="koszyk" style="padding-top: 90px"></section>
+
  <section>
    <div class="container">
+     <div id="time_info" style="padding:20px 0; font-weight: 600; font-size:20px;"></div>
    <div class="row">
      <form action="http://localhost:8000/orders/potwierdz-zamowienie/" method="post">
     <table class="table table-hover table-bordered text-center">
@@ -86,6 +88,23 @@ $(document).ready (function () {
         var regex_quantity = /(\d+)(?!.*\d)/;
         this.href = url_quantity.replace(regex_quantity, $(this).siblings('input').val())
     });
+
+    var x = setInterval(function() {
+
+  var distance = new Date().getTime();
+  var now = new Date();
+  var hour = now.getHours();
+  var minutes = now.getMinutes();
+  var seconds = now.getSeconds();
+
+  if (hour > 0 && hour < 8) {$( "#time_info" ).text("Twoja kanapka dojedzie dziś w godzinach 10:00-12:00.")}
+  else if (hour>8 && hour < 9) {$( "#time_info" ).text("Jeśli zamówisz kanapkę w ciągu " + (60 - minutes) + " minut, kanapka dojedzie dziś w godzinach 10:00-12:00.")}
+  else {$( "#time_info" ).text("Twoja kanapka dojedzie jutro w godzinach 10:00-12:00.")}
+
+  if (distance < 0) {
+    clearInterval(x);
+  }
+}, 1000);
 });
 </script>
 {% endblock script %}
