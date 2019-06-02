@@ -14,6 +14,7 @@ class DbManager:
 
     allergens_csv_name = "doc/demo_data_in_csv/allergens.csv"
     clients_csv_name = "doc/demo_data_in_csv/clients.csv"
+    ingredient_groups_csv_name = "doc/demo_data_in_csv/ingredient_groups.csv"
     ingredients_csv_name = "doc/demo_data_in_csv/ingredients.csv"
     sandwiches_csv_name = "doc/demo_data_in_csv/sandwiches.csv"
     companies_csv_name = "doc/demo_data_in_csv/companies.csv"
@@ -28,17 +29,20 @@ class DbManager:
                 allergen.save()
 
     def import_ingredient_groups(self):
-        ingredient_group = IngredientGroup()
-        ingredient_group.name = "pieczywo"
-        ingredient_group.save()
+        with open(self.ingredient_groups_csv_name) as ingredient_groups_csv_file:
+            csv_reader = csv.reader(ingredient_groups_csv_file, delimiter=',')
+            for name in csv_reader:
+                ingredient_group = IngredientGroup()
+                ingredient_group.name = name[0]
+                ingredient_group.save()
 
     def import_ingredients(self):
         with open(self.ingredients_csv_name) as ingredients_csv_file:
             csv_reader = csv.reader(ingredients_csv_file, delimiter=',')
-            for name, calories_per_portion, portion_size_grams, price in csv_reader:
+            for name, ingredient_group_name, calories_per_portion, portion_size_grams, price in csv_reader:
                 ingredient = Ingredient()
                 ingredient.name = name
-                ingredient.group = IngredientGroup.objects.get(name="pieczywo")
+                ingredient.group = IngredientGroup.objects.get(name=ingredient_group_name)
                 ingredient.calories_per_portion = calories_per_portion
                 ingredient.portion_size_grams = portion_size_grams
                 ingredient.price = price
