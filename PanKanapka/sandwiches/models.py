@@ -22,6 +22,7 @@ class Ingredient(models.Model):
     calories_per_portion = models.IntegerField(null=True, blank=False)
     portion_size_grams = models.IntegerField(null=True, blank=False)
     price = models.DecimalField(null=True, blank=False, decimal_places=2, max_digits=5)
+    allergen = models.ManyToManyField(Allergen)
 
     def __str__(self):
         return self.name
