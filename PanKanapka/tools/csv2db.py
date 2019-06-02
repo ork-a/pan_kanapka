@@ -21,7 +21,7 @@ class DbManager:
     sandwich_images_path = "/sandwiches/images/s{}.jpg"
 
     def import_allergens(self):
-        with open(self.allergens_csv_name) as allergens_csv_file:
+        with open(self.allergens_csv_name, encoding="utf-8") as allergens_csv_file:
             csv_reader = csv.reader(allergens_csv_file, delimiter=',')
             for name in csv_reader:
                 allergen = Allergen()
@@ -29,7 +29,7 @@ class DbManager:
                 allergen.save()
 
     def import_ingredient_groups(self):
-        with open(self.ingredient_groups_csv_name) as ingredient_groups_csv_file:
+        with open(self.ingredient_groups_csv_name, encoding="utf-8") as ingredient_groups_csv_file:
             csv_reader = csv.reader(ingredient_groups_csv_file, delimiter=',')
             for name in csv_reader:
                 ingredient_group = IngredientGroup()
@@ -37,7 +37,7 @@ class DbManager:
                 ingredient_group.save()
 
     def import_ingredients(self):
-        with open(self.ingredients_csv_name) as ingredients_csv_file:
+        with open(self.ingredients_csv_name, encoding="utf-8") as ingredients_csv_file:
             csv_reader = csv.reader(ingredients_csv_file, delimiter=',')
             for name, ingredient_group_name, calories_per_portion, portion_size_grams, price in csv_reader:
                 ingredient = Ingredient()
@@ -49,7 +49,7 @@ class DbManager:
                 ingredient.save()
 
     def import_sandwiches(self):
-        with open(self.sandwiches_csv_name) as sandwiches_csv_file:
+        with open(self.sandwiches_csv_name, encoding="utf-8") as sandwiches_csv_file:
             csv_reader = csv.reader(sandwiches_csv_file, delimiter=',')
             for name, price, accessible, image_filename, ingredient_names in csv_reader:
                 sandwich = Sandwich()
@@ -67,7 +67,7 @@ class DbManager:
                 sandwich.save()
 
     def import_companies(self):
-        with open(self.companies_csv_name) as companies_csv_file:
+        with open(self.companies_csv_name, encoding="utf-8") as companies_csv_file:
             csv_reader = csv.reader(companies_csv_file, delimiter=',')
             for name, address in csv_reader:
                 company = Company()
@@ -76,7 +76,7 @@ class DbManager:
                 company.save()
 
     def import_clients(self):
-        with open(self.clients_csv_name) as clients_csv_file:
+        with open(self.clients_csv_name, encoding="utf-8") as clients_csv_file:
             csv_reader = csv.reader(clients_csv_file, delimiter=',')
             for email, name, surname, active, company_name, staff, admin in csv_reader:
                 client = User()
