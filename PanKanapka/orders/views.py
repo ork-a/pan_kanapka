@@ -12,10 +12,11 @@ from orders.models import OrderSandwiches, Order
 
 def get_user_pending_order(request):
     user_profile = get_object_or_404(User, email=request.user)
-    order = Order.objects.filter(user=user_profile, is_ordered=False)
-    if order.exists():
-        return order[0]
-    return 0
+    order = Order.objects.get(user=user_profile, is_ordered=False)
+    if request.POST:
+        order.remarks = request.POST['order_remarks']
+        order.save()
+    return order
 
 
 def get_user_ordered_items(request):
@@ -88,15 +89,21 @@ def confirm_order(request):
             item.is_ordered = True
             item.save()
     messages.info(request, "Zamówienie zostało złozone. Możesz je podejrzeć w Twoich Zamówieniach.")
-    return redirect(reverse('orders:summary'))
+    return redirect(reverse('orders:show_confirmed_order'))
 
 
 @login_required()
 def show_confirmed_order(request):
     ordered_items = get_user_ordered_items(request)
-    price_total = sum([item.sandwich.price * item.quantity for item in ordered_items])
+    if ordered_items:
+        price_total = sum([item.sandwich.price * item.quantity for item in ordered_items])
+        order = Order.objects.filter(('sandwiches', ordered_items[0]))
+    else:
+        price_total = 0
+        order = None
     context = {
         'order': ordered_items,
-        'price_total': price_total
+        'price_total': price_total,
+        'full_order': order
     }
     return render(request, 'placed_orders.html', context)

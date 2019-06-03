@@ -10,8 +10,10 @@ class RegisterForm(forms.ModelForm):
         'password_mismatch': "Hasła nie są identyczne",
     }
 
-    password1 = forms.CharField(widget=forms.PasswordInput())
-    password2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput())
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+                    'placeholder':'Podaj haslo',}))
+    password2 = forms.CharField(label='Potwierdź hasło', widget =forms.PasswordInput(attrs={
+                    'placeholder':'Potwierdź haslo',}))
 
     class Meta:
         model = User
@@ -45,14 +47,12 @@ class RegisterForm(forms.ModelForm):
             )
         return password2
 
-
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         if commit:
             user.save()
         return user
-
 
 
 class UserAdminCreationForm(forms.ModelForm):

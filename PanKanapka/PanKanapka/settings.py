@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'tools.apps.ToolsConfig',
     'clients.apps.ClientsConfig',
     'sandwiches.apps.SandwichesConfig',
-    'orders.apps.OrdersConfig',
+    'orders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -139,3 +139,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
    "django.core.context_processors.media",
    "django.contrib.messages.context_processors.messages"
 )
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'mobilnakanapka@outlook.com'
+EMAIL_HOST_PASSWORD = 'WielkieZarcie'
+
