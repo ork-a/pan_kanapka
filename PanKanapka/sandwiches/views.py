@@ -8,20 +8,16 @@ from django.urls import reverse
 
 
 def sandwiches(request):
-    object_list = Sandwich.objects.all()
-    current_order_products = []
-    ingredients_list ={}
-    allergens_list ={}
-    for object in object_list:
-        ingredients_list[object.id] = object.ingredients.all()
-        lista = []
-        for ingredient in ingredients_list[object.id]:
-            for a in ingredient.allergen.all():
-                lista.append(a.name)
-                lista = list(set(lista))
-                lista_str = ', '.join(lista)
+    sandwiches_list = [{'sandwich': sandwich} for sandwich in Sandwich.objects.all()]
 
-        allergens_list[object.id] = lista_str
+    for sandwich_dict in sandwiches_list:
+        allergens = []
+        for ingredient in sandwich_dict['sandwich'].ingredients.all():
+            for allergen in ingredient.allergen.all():
+                allergens.append(allergen)
+        sandwich_dict.update({'allergens': set(allergens)})
+
+    current_order_products = []
 
     if request.user.is_authenticated:
         filtered_orders = Order.objects.filter(user=request.user, is_ordered=False)
@@ -32,10 +28,8 @@ def sandwiches(request):
             current_order_products = [product.sandwich for product in user_order_items]
 
     context = {
-        'object_list': object_list,
-        'current_order_products': current_order_products,
-        'ingredients_list': ingredients_list,
-        'allergens_list': allergens_list,
+        'object_list': sandwiches_list,
+        'current_order_products': current_order_products
     }
 
     return render(request, "sandwiches_list.html", context)
@@ -47,7 +41,7 @@ def create_sandwich(request):
     ingredient_groups = IngredientGroup.objects.all()
     for ingredient_group in ingredient_groups:
         ingredients_of_group = Ingredient.objects.filter(group=ingredient_group)
-        sorted_ingredients.update({ ingredient_group.name: ingredients_of_group })
+        sorted_ingredients.update({ingredient_group.name: ingredients_of_group})
     context = {
         'object_list': sorted_ingredients,
     }
@@ -91,16 +85,13 @@ def confirm_new_sandwich(request):
 
 def plus_minus_view(request):
     if request.method == 'POST':
-        if request.user.is_authenticated:
-            sandwich = Sandwich.objects.get(id = request.POST['id'])
-            order_sandwich = OrderSandwiches.objects.filter(sandwich=sandwich)
-            if not order_sandwich.exists():
-                new_order = OrderSandwiches(sandwich=sandwich, quantity=1)
-                new_order.save()
-                return new_order
-            else:
-                next_order = OrderSandwiches.objects.get(sandwich=sandwich)
-                next_order.quantity += 1
-                return next_order
+        sandwich = Sandwich.objects.get(id=request.POST['id'])
+        order_sandwich = OrderSandwiches.objects.filter(sandwich=sandwich)
+        if not order_sandwich.exists():
+            new_order = OrderSandwiches(sandwich=sandwich, quantity=1)
+            new_order.save()
+            return new_order
         else:
-            return 'uzytkownik nie zalogowany'
+            next_order = OrderSandwiches.objects.get(sandwich=sandwich)
+            next_order.quantity += 1
+            return next_order

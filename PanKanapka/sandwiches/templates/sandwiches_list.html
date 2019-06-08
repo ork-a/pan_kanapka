@@ -2,63 +2,90 @@
 
 {% block content %}
     {{ message }}
-<section id="portfolio" class="portfolio">
-            <div class="container">
-                <div class="row">
-                    <div class="main_slider text-center">
-                        <div class="col-md-12">
-                            <div class="head_title text-center">
-                                <h1>Wybierz z gotowych kanapek lub stwórz własną </h1>
-                            </div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-         {% load staticfiles%}
-        <div class="main_portfolio_content">
-                     <div class="col-md-3 col-sm-4 col-xs-6 single_portfolio_text">
-                         <img src="{% static '/images/newsbg.jpg' %}" alt=""/>
-                         <div class="portfolio_images_overlay text-center">
-							<div>
-								<br>
-                                <br>
-								<p class="product_price">Wybierz składniki i skomponuj własną kanapkę</p>
-								 <a class="btn btn-primary" href="/nowa-kanapka#nowe">Stwórz</a>
-							</div>
-						</div>
-					</div>
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="main_slider text-center">
+                    <div class="col-md-12">
+                        <div class="head_title text-center">
+                            <h1>Wybierz z gotowych kanapek lub stwórz własną </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% for object in object_list %}
-        {% if object.accessible %}
-              <div class="main_portfolio_content">
-                     <div class="col-md-3 col-sm-4 col-xs-6 single_portfolio_text">
-                         <img src="{{object.image.url}}" alt="" />
-                         <div class="portfolio_images_overlay text-center">
-							<div>
-								<h6>{{ object.name }}</h6>
-								<p class="product_price">Cena: {{ object.price }} PLN</p>
-                                {% for key, value in ingredients_list.items %}
-                                {% if key == object.id %}
-                                <p class="product_price">Składniki:
-								    {% for skladnik in value %}
-                                    {{ skladnik }}
-                                    {% endfor %}
-                                    </p>
-                                {% endif %}
-                                {% endfor %}
 
-                                {% for key, value in allergens_list.items %}
-                                {% if key == object.id %}
-                                <p class="product_price">Alergeny: {{value }} </p>
-                                {% endif %}
-                                {% endfor %}
-								 <a class="btn btn-primary" href="{% url 'orders:single_order' object.id%}#koszyk">Zamów</a>
-							</div>
-						</div>
-					</div>
-				</div>
-        {% endif %}
-    {% endfor %}
+        {% load staticfiles%}
+        <div class="main_portfolio_content">
+            <div class="col-md-3 col-sm-4 col-xs-6 single_portfolio_text">
+                <img src="{% static '/images/newsbg.jpg' %}" alt=""/>
+                <div class="portfolio_images_overlay text-center">
+                    <div>
+                        <br>
+                        <br>
+                        <p class="product_price">Wybierz składniki i skomponuj własną kanapkę</p>
+                        <a class="btn btn-primary" href="/nowa-kanapka#nowe">Stwórz</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for object in object_list %}
+            {% if object.sandwich.accessible %}
+                <div class="main_portfolio_content">
+                    <div class="col-md-3 col-sm-4 col-xs-6 single_portfolio_text">
+                        <img src="{{object.sandwich.image.url}}" alt=""/>
+                        <div class="portfolio_images_overlay text-center">
+                            <div>
+                                <h6>{{ object.sandwich.name }}</h6>
+                                <p class="product_price">Cena: {{ object.sandwich.price }} PLN</p>
+                                <div>
+                                    <div class="ingredient_header">Składniki:</div>
+                                    {% for ingredient in object.sandwich.ingredients.all %}
+                                        <span class="ingredient">{{ingredient.name}}</span>
+                                    {% endfor %}
+                                </div>
+                                <div>
+                                    <div class="allergen_header">Allergeny:</div>
+                                    {% for allergen in object.allergens %}
+                                        <img class="allergen_icon" src="{{ allergen.image.url }}" alt="{{ allergen.name }}" />
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <a class="btn btn-primary order" href="{% url 'orders:single_order' object.sandwich.id%}">Zamów</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
     </section>
+    <style>
+        .ingredient {
+            padding: 2px 5px;
+            background: rgba(255, 255, 255, .8);
+            border-radius: 4px;
+            white-space: nowrap;
+            display: inline-block;
+            margin: 2px
+        }
+
+        .ingredient_header {
+            color: #fff;
+            font-variant: small-caps;
+            font-size: 16px;
+        }
+
+        .allergen_header {
+            color: #fff;
+            font-variant: small-caps;
+            margin-top: 15px;
+        }
+
+        .portfolio_images_overlay .allergen_icon {
+            width: unset
+        }
+
+        .order {
+            margin: 15px;
+        }
+    </style>
 {% endblock content %}
