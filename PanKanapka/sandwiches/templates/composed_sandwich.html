@@ -23,7 +23,8 @@
                                        name="ingredient"
                                        value="{{ object.id }}"
                                        {% if object.group.name == 'pieczywo' %}
-                                         disabled
+                                           onclick="return false"
+                                           class="inactive"
                                        {% endif %}
                                 >
                                 <label class="btn btn-light" for="{{ object.id }}">
@@ -40,6 +41,35 @@
                     </form>
 			</div>
     </section>
+    <style>
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        label {
+            position: relative;
+        }
+
+        input:checked+label::before {
+            content: '\f00c';
+            font-family: 'FontAwesome';
+        }
+
+        label::before {
+            content: '\f00d';
+            color: red;
+            font-family: 'FontAwesome';
+        }
+
+        input[type="checkbox"]:checked + label::before {
+            color: #5cb85c;
+        }
+
+        input.inactive[type="checkbox"]:checked + label::before, .inactive+label {
+            color: gray;
+            cursor: not-allowed;
+        }
+    </style>
 {% endblock content %}
 
 {% block script %}

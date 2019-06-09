@@ -2,6 +2,7 @@
 .idea/**/pylint.xml
 .idea/**/vcs.xml
 .idea/**/tasks.xml
+.idea/**/misc.xml
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
