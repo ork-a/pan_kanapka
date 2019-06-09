@@ -9,4 +9,5 @@ urlpatterns = [
     path('nowa-kanapka', views.create_sandwich, name='create_sandwich'),
     path('moja-kanapka', views.new_sandwich, name='new_sandwich'),
     path('potwierdz-nowa-kanapke', views.confirm_new_sandwich, name='confirm_new_sandwich'),
+    path('kanapka/<int:sandwich_id>/', views.single_sandwich, name='single_sandwich'),
 ]

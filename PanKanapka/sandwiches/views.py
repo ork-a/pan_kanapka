@@ -35,6 +35,15 @@ def sandwiches(request):
     return render(request, "sandwiches_list.html", context)
 
 
+def single_sandwich(request, sandwich_id):
+    sandwich = Sandwich.objects.get(pk=sandwich_id)
+
+    context = {
+        'sandwich': sandwich,
+    }
+
+    return render(request, "single_sandwich.html", context)
+
 @login_required()
 def create_sandwich(request):
     sorted_ingredients = {}
@@ -47,7 +56,6 @@ def create_sandwich(request):
     }
 
     return render(request, "new_sandwich.html", context)
-
 
 @login_required()
 def new_sandwich(request):
