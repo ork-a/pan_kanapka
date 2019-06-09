@@ -18,7 +18,7 @@
         {% csrf_token %}
         {% for ingredient_group, ingredient_list in object_list.items %}
                 <div class="col-md-3 col-sm-4 col-xs-6 {{ ingredient_group }}">
-                    <div style="font-variant: small-caps;">{{ ingredient_group }}</div>
+                    <div class="group_header">{{ ingredient_group }}</div>
                     {% for ingredient in ingredient_list %}
                             <div>
                                 <input id="{{ ingredient.id }}"
@@ -34,28 +34,56 @@
                     {% endfor %}
 	    	    </div>
         {% endfor %}
-        <div class="pull-right" style="clear:both; font-weight:600; font-size:18px">
+        <div class="pull-right" id="sandwich_price">
             Cena za kanapkę: <span id="total_price"> 0</span> PLN
         </div>
-        <div class="col-xs-12" style="padding:20px 0">
-            <input class="btn btn-primary pull-right"
+        <div class="col-xs-12">
+            <input id="choose_button" class="btn btn-primary pull-right"
                    type="submit"
                    data-toggle="popover"
                    data-trigger="focus"
                    title="Wybieram"
                    data-content="And here's some amazing content. It's very engaging. Right?"
-                   value="Wybieram"
-                   style="margin-bottom:15px">
+                   value="Wybieram">
 
             <div class="alert alert-danger"
                  id="bread_obligatory"
-                 role="alert"
-                 style="display:none; clear:both">Musisz wybrać pieczywo do kanapki
+                 role="alert">Musisz wybrać pieczywo do kanapki
             </div>
 
         </div>
     </form>
     </section>
+
+    <style>
+        .group_header {
+            font-variant: small-caps;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        #sandwich_price {
+            clear:both;
+            font-weight:600;
+            font-size:18px
+        }
+
+        #choose_button {
+            margin: 20px 0;
+        }
+
+        #bread_obligatory {
+            display:none;
+            clear:both;
+        }
+
+        .ingredient_label {
+            margin: 2px 0;
+            border-radius: 4px;
+            white-space: normal;
+            text-align: left;
+        }
+    </style>
 {% endblock content %}
 
 {% block script %}
