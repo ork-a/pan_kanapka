@@ -5,11 +5,16 @@ class Company(models.Model):
     name = models.CharField(max_length=100, unique=True)
     address = models.CharField(max_length=255)
 
+    class Meta:
+        verbose_name = 'Firma'
+        verbose_name_plural = 'Firmy'
+
     def __str__(self):
         return self.name
 
 
 class ClientManager(BaseUserManager):
+
     def create_user(self, email, password=None):
         if not email:
             raise ValueError('Użytkownik musi posiadać adres email.')
@@ -55,6 +60,10 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    class Meta:
+        verbose_name = 'Osoba'
+        verbose_name_plural = 'Osoby'
 
     def get_full_name(self):
         return self.email
