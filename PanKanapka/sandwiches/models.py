@@ -5,12 +5,20 @@ class Allergen(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False)
     image = models.ImageField(upload_to='sandwiches/images/', blank=True, null=True)
 
+    class Meta:
+        verbose_name = 'Alergen'
+        verbose_name_plural = 'Alergeny'
+
     def __str__(self):
         return self.name
 
 
 class IngredientGroup(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
+
+    class Meta:
+        verbose_name = 'Grupa składników'
+        verbose_name_plural = 'Grupy składników'
 
     def __str__(self):
         return self.name
@@ -24,6 +32,10 @@ class Ingredient(models.Model):
     price = models.DecimalField(null=True, blank=False, decimal_places=2, max_digits=5)
     allergen = models.ManyToManyField(Allergen)
 
+    class Meta:
+        verbose_name = 'Składnik'
+        verbose_name_plural = 'Składniki'
+
     def __str__(self):
         return self.name
 
@@ -34,6 +46,10 @@ class Sandwich(models.Model):
     accessible = models.BooleanField(null=True)
     image = models.ImageField(upload_to='sandwiches/images/', blank=True, null=True)
     ingredients = models.ManyToManyField(Ingredient)
+
+    class Meta:
+        verbose_name = 'Kanapka'
+        verbose_name_plural = 'Kanapki'
 
     def __str__(self):
         return self.name or 'nowa kanapka nr {}'.format(self.pk)

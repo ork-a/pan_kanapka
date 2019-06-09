@@ -13,6 +13,10 @@ class OrderSandwiches(models.Model):
     date_added = models.DateTimeField(auto_now=True)
     quantity = models.IntegerField(default=1)
 
+    class Meta:
+        verbose_name = 'Kanapka w zamówieniu'
+        verbose_name_plural = 'Kanapki w zamówieniach'
+
     def __str__(self):
         return '{} - {}'.format(self.user.name, self.sandwich.name)
 
@@ -23,6 +27,10 @@ class Order(models.Model):
     sandwiches = models.ManyToManyField(OrderSandwiches)
     date_ordered = models.DateTimeField(auto_now=True)
     remarks = models.TextField(max_length=300, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Zamówienie'
+        verbose_name_plural = 'Zamówienia'
 
     def get_order(self):
         return self.sandwiches.all()
