@@ -3,7 +3,7 @@ from django.db import models
 
 class Allergen(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False)
-    image = models.ImageField(upload_to='sandwiches/images/', blank=True, null=True)
+    image = models.ImageField(upload_to='allergens/images/', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Alergen'

@@ -12,7 +12,7 @@ class Command(BaseCommand):
         db_manager.delete_orders()
         self.stdout.write(self.style.SUCCESS('Orders deleted'))
         db_manager.delete_clients()
-        self.stdout.write(self.style.SUCCESS('Clients deleted, except admin@kanapka.com'))
+        self.stdout.write(self.style.SUCCESS('Clients deleted'))
         db_manager.delete_companies()
         self.stdout.write(self.style.SUCCESS('Companies deleted'))
         db_manager.delete_allergens()
