@@ -47,7 +47,11 @@
                                 <div>
                                     <div class="allergen_header">Allergeny:</div>
                                     {% for allergen in object.get_allergens %}
-                                        <img class="allergen_icon" src="{{ allergen.image.url }}" alt="{{ allergen.name }}" />
+                                        <span class="allergen_icon">
+                                            <img src="{{ allergen.image.url }}"
+                                                 alt="{{ allergen.name }}"
+                                                 title="{{ allergen.name }}"/>
+                                        </span>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -72,7 +76,7 @@
             border-radius: 5px;
         }
 
-        .ingredient_header {
+        .ingredient_header, .allergen_header {
             color: #fff;
             font-variant: small-caps;
             font-size: 16px;
@@ -82,6 +86,18 @@
             color: #fff;
             font-variant: small-caps;
             margin-top: 15px;
+        }
+
+        .allergen_icon {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+            background-color: rgba(255, 255, 255, .5);
+            border-radius: 50%;
+        }
+
+        .allergen_icon img{
+            width: 50px;
         }
 
         .portfolio_images_overlay .allergen_icon {

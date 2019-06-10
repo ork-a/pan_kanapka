@@ -24,7 +24,7 @@
             <div class="col col-xs-12 col-sm-6 col-md-8">
                 <ul id="allergens_header"><span>Allergeny:</span></ul>
                 {% for allergen in sandwich.get_allergens %}
-                    <img src="{{ allergen.image.url }}" />
+                    <img src="{{ allergen.image.url }}" title="{{ allergen.name }}" alt="{{ allergen.name }}" />
                 {% endfor %}
             </div>
             <div id="price" class="col col-xs-12 col-sm-6 col-md-8">
