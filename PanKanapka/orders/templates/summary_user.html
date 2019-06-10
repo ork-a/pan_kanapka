@@ -18,7 +18,7 @@
         {% if not item.is_ordered %}
         <tr>
           <td>
-            {{ item.sandwich.name }}
+            <a href="{% url 'sandwiches:single_sandwich' item.sandwich.id %}">{{ item.sandwich.name }}</a>
             <span class="pull-right">
               <a href="{% url 'orders:delete_sandwich' item.id %}" data-balloon="Usuń kanapkę z koszyka" class="text-danger">
                 <i class="fas fa-trash"></i>
