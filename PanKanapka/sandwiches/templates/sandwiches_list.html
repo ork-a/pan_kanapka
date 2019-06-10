@@ -30,28 +30,28 @@
             </div>
         </div>
         {% for object in object_list %}
-            {% if object.sandwich.accessible %}
+            {% if object.accessible %}
                 <div class="main_portfolio_content">
                     <div class="col-md-3 col-sm-4 col-xs-6 single_portfolio_text">
-                        <img src="{{object.sandwich.image.url}}" alt=""/>
+                        <img src="{{object.image.url}}" alt=""/>
                         <div class="portfolio_images_overlay text-center">
                             <div>
-                                <h6>{{ object.sandwich.name }}</h6>
-                                <p class="product_price">Cena: {{ object.sandwich.price }} PLN</p>
+                                <h6>{{ object.name }}</h6>
+                                <p class="product_price">Cena: {{ object.price }} PLN</p>
                                 <div>
                                     <div class="ingredient_header">Składniki:</div>
-                                    {% for ingredient in object.sandwich.ingredients.all %}
+                                    {% for ingredient in object.ingredients.all %}
                                         <span class="ingredient">{{ingredient.name}}</span>
                                     {% endfor %}
                                 </div>
                                 <div>
                                     <div class="allergen_header">Allergeny:</div>
-                                    {% for allergen in object.allergens %}
+                                    {% for allergen in object.get_allergens %}
                                         <img class="allergen_icon" src="{{ allergen.image.url }}" alt="{{ allergen.name }}" />
                                     {% endfor %}
                                 </div>
                             </div>
-                            <a class="btn btn-primary order" href="{% url 'orders:single_order' object.sandwich.id%}">Zamów</a>
+                            <a class="btn btn-primary order" href="{% url 'orders:single_order' object.id%}">Zamów</a>
                         </div>
                     </div>
                 </div>

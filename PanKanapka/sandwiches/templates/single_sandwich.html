@@ -7,12 +7,24 @@
                 <h4>{{sandwich.name}}</h4>
             </div>
             <div class="col col-xs-12 col-sm-6 col-md-4">
-                <img src="{{sandwich.image.url}}" />
+                {% if sandwich.image %}
+                    <img src="{{sandwich.image.url}}" />
+                {% else %}
+                    {% load staticfiles%}
+                    <img src="{% static '/images/newsbg.jpg' %}" alt=""/>
+                {% endif %}
             </div>
             <div class="col col-xs-12 col-sm-6 col-md-8">
-                <ul id="ingredients_header">Składniki:</ul>
-                {% for ingredient in sandwich.ingredients.all %}
-                    <li class="ingredient">{{ ingredient.name }} - {{ ingredient.price }} PLN</li>
+                <ul id="ingredients_header"><span>Składniki:</span>
+                    {% for ingredient in sandwich.ingredients.all %}
+                        <li class="ingredient">{{ ingredient.name }} - {{ ingredient.price }} PLN</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col col-xs-12 col-sm-6 col-md-8">
+                <ul id="allergens_header"><span>Allergeny:</span></ul>
+                {% for allergen in sandwich.get_allergens %}
+                    <img src="{{ allergen.image.url }}" />
                 {% endfor %}
             </div>
             <div id="price" class="col col-xs-12 col-sm-6 col-md-8">
@@ -30,13 +42,13 @@
             padding: 20px;
         }
 
-        #ingredients_header{
+        #ingredients_header>span, #allergens_header>span {
             font-variant: small-caps;
             font-weight: 600;
             font-size: 20px;
         }
 
-        #price{
+        #price {
             font-size: 24px;
             font-weight: 600;
             text-align: right;

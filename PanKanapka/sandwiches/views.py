@@ -8,15 +8,7 @@ from django.urls import reverse
 
 
 def sandwiches(request):
-    sandwiches_list = [{'sandwich': sandwich} for sandwich in Sandwich.objects.all()]
-
-    for sandwich_dict in sandwiches_list:
-        allergens = []
-        for ingredient in sandwich_dict['sandwich'].ingredients.all():
-            for allergen in ingredient.allergen.all():
-                allergens.append(allergen)
-        sandwich_dict.update({'allergens': set(allergens)})
-
+    sandwiches_list = Sandwich.objects.all()
     current_order_products = []
 
     if request.user.is_authenticated:
@@ -37,12 +29,12 @@ def sandwiches(request):
 
 def single_sandwich(request, sandwich_id):
     sandwich = Sandwich.objects.get(pk=sandwich_id)
-
+    sandwich.get_allergens()
     context = {
         'sandwich': sandwich,
     }
-
     return render(request, "single_sandwich.html", context)
+
 
 @login_required()
 def create_sandwich(request):
@@ -56,6 +48,7 @@ def create_sandwich(request):
     }
 
     return render(request, "new_sandwich.html", context)
+
 
 @login_required()
 def new_sandwich(request):
@@ -77,7 +70,6 @@ def confirm_new_sandwich(request):
     sandwich.name = "Kanapka oryginalna"
     sandwich.price = sum([ingredient.price for ingredient in object_list])
     sandwich.accessible = False
-    sandwich.image = "/sandwiches/images/s1.jpg"
     sandwich.save()
 
     for ingredient in object_list:
