@@ -18,14 +18,16 @@ class DbManager:
     ingredients_csv_name = "doc/demo_data_in_csv/ingredients.csv"
     sandwiches_csv_name = "doc/demo_data_in_csv/sandwiches.csv"
     companies_csv_name = "doc/demo_data_in_csv/companies.csv"
-    sandwich_images_path = "/sandwiches/images/s{}.jpg"
+    sandwich_images_path = "/sandwiches/images/{}"
+    allergen_images_path = "/allergens/images/{}"
 
     def import_allergens(self):
         with open(self.allergens_csv_name, encoding="utf-8") as allergens_csv_file:
             csv_reader = csv.reader(allergens_csv_file, delimiter=',')
-            for name in csv_reader:
+            for name, image_filename in csv_reader:
                 allergen = Allergen()
-                allergen.name = name[0]
+                allergen.name = name
+                allergen.image = "/allergens/images/{}".format(image_filename)
                 allergen.save()
 
     def import_ingredient_groups(self):
