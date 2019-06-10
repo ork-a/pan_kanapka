@@ -51,5 +51,12 @@ class Sandwich(models.Model):
         verbose_name = 'Kanapka'
         verbose_name_plural = 'Kanapki'
 
+    def get_allergens(self):
+        allergens = []
+        allergens_all = [list(ingredient.allergen.all()) for ingredient in self.ingredients.all()]
+        for allergen_set in allergens_all:
+            allergens.extend(allergen_set)
+        return set(allergens)
+
     def __str__(self):
         return self.name or 'nowa kanapka nr {}'.format(self.pk)
