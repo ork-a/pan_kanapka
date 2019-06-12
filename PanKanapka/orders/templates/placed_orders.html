@@ -2,65 +2,61 @@
 
 {% block content %}
 <section  id="order" style="padding-top: 90px"></section>
-<div></div>
 <section>
     <div class="container">
-    <div class="row">
-        <table class="table table-hover table-bordered text-center">
-            <tr class="text-center">
-                <th style="text-align:center">Kanapka</th>
-                <th style="text-align:center">Ilość</th>
-                <th style="text-align:center">Cena</th>
-            </tr>
-            {% if order %}
-                {% for item in order %}
-                <tr>
-                    <td>
-                        {{ item.sandwich.name }}
-                    </td>
-                    <td>
-                        {{item.quantity}}
-                    </td>
-                    <td>{{ item.sandwich.price }} PLN</td>
-                </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan=3>Nie złożyłeś jeszcze żadnego zamówienia.</td>
-                </tr>
-            {% endif %}
-            <tr>
-                {% if price_total %}
-                <td colspan=2>
-                    <strong class="pull-right">W sumie:</strong>
-                </td>
-
-                <td colspan=1>
-                    <strong>{{ price_total }} PLN</strong>
-                </td>
-                {% endif %}
-            </tr>
-            <tr><td>
-                {% for k in full_order %}
-                    {{k.remarks}}
-                {% endfor %}
-            </td></tr>
-            <tr>
-                <td colspan=2>
-                    <a href="{% url 'sandwiches:sandwiches' %}" class="btn btn-warning pull-left">
-                        Wróć do strony głównej
-                    </a>
-                </td>
-                <td colspan=1>
-                    {% if order.get_order %}
-                    <a href="{% url 'orders:confirm_order' %}" class="pull-right btn btn-primary">Zamów</a>
-                    {% endif %}
-                </td>
-            </tr>
-        </table>
+        <div id="header">Twoje zamówienia w realizacji:</div>
     </div>
+    <div class="container tbl">
+        <div class="row header">
+            <div class="col col-xs-7">Kanapka</div>
+            <div class="col col-xs-2">Ilość</div>
+            <div class="col col-xs-3">Cena</div>
+        </div>
+        {% for order, price, order_sandwiches in confirmed_orders.values %}
+            <div class="row">
+                <div style="background-color: #e4d9d0; padding: 3px;"></div>
+                {% for item in order_sandwiches %}
+                    <div class="col col-xs-7">{{ item.sandwich.name }}</div>
+                    <div class="col col-xs-2">{{ item.quantity }}</div>
+                    <div class="col col-xs-3">{{ item.sandwich.price }} PLN</div>
+                {% endfor %}
+                <div class="col col-xs-7" style="border-top: 1px solid #e4d9d0; border-bottom:1px solid #e4d9d0">
+                    Data doręczenia: <strong>{{ order.date_ordered|date:"d-m-Y" }}</strong>
+                </div>
+                <div class="col col-xs-2" style="border-top: 1px solid #e4d9d0; border-bottom:1px solid #e4d9d0 ; text-align: right"><strong>W sumie:</strong></div>
+                <div class="col col-xs-3" style="border-top: 1px solid #e4d9d0;border-bottom:1px solid #e4d9d0"><strong>{{ price }} PLN</strong></div>
+                <div class="col col-xs-12" style="margin-bottom: 10px; text-align:left">Uwagi do zamówienia: {{order.remarks}}</div>
+            </div>
+        {% empty %}
+            <div class="col col-xs-12">Nie złożyłeś jeszcze żadnego zamówienia.</div>
+        {% endfor %}
+    </div>
+    <div class="container" style="margin-bottom:20px">
+        <div class="row">
+            <a href="{% url 'sandwiches:sandwiches' %}" class="btn btn-warning pull-left">
+                Wróć do strony głównej
+            </a>
+        </div>
     </div>
 </section>
+<style>
+    #header {
+        font-size:20px;
+        margin-bottom:15px;
+        font-weight: 600;
+    }
+    .row.header {
+        font-weight: 600;
+    }
+    .container.tbl {
+        text-align: center;
+        border: 1px solid #e4d9d0;
+    }
+    .row>.col {
+        padding:5px
+    }
+
+</style>
 {% endblock %}
 
 

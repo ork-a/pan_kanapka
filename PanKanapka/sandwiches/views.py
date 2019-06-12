@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from orders.models import Order, OrderSandwiches
+from orders.models import OrderSandwiches, Order, OrderStatus
 from .models import Sandwich, IngredientGroup, Ingredient
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -9,21 +9,9 @@ from django.urls import reverse
 
 def sandwiches(request):
     sandwiches_list = Sandwich.objects.all()
-    current_order_products = []
-
-    if request.user.is_authenticated:
-        filtered_orders = Order.objects.filter(user=request.user, is_ordered=False)
-
-        if filtered_orders.exists():
-            user_order = filtered_orders[0]
-            user_order_items = user_order.sandwiches.all()
-            current_order_products = [product.sandwich for product in user_order_items]
-
     context = {
         'object_list': sandwiches_list,
-        'current_order_products': current_order_products
     }
-
     return render(request, "sandwiches_list.html", context)
 
 
@@ -75,11 +63,11 @@ def confirm_new_sandwich(request):
     for ingredient in object_list:
         sandwich.ingredients.add(ingredient)
 
-    order_item, status = OrderSandwiches.objects.get_or_create(sandwich=sandwich, user=request.user)
-    user_order, status = Order.objects.get_or_create(user=request.user, is_ordered=False)
-    user_order.sandwiches.add(order_item)
-    if status:
-        user_order.save()
+    in_basket_status = OrderStatus.objects.get(status="W koszyku")
+    order, created = Order.objects.get_or_create(user=request.user, status=in_basket_status)
+
+    OrderSandwiches.objects.get_or_create(sandwich=sandwich, order=order)
+
     return redirect(reverse('orders:summary'))
 
 
