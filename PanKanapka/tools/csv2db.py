@@ -1,14 +1,10 @@
 from __future__ import unicode_literals
 
-from clients.models import User
-from clients.models import Company
-from sandwiches.models import Allergen
-from sandwiches.models import IngredientGroup
-from sandwiches.models import Ingredient
-from sandwiches.models import Sandwich
-from orders.models import Order
-from orders.models import OrderSandwiches
+from clients.models import User, Company
+from sandwiches.models import Allergen, IngredientGroup, Ingredient, Sandwich
+from orders.models import Order, OrderSandwiches, OrderStatus
 import csv
+
 
 class DbManager:
 
@@ -93,7 +89,7 @@ class DbManager:
                 client.email = email
                 client.name = name
                 client.surname = surname
-                if admin in ['True', 'true']:
+                if staff in ['True', 'true']:
                     client.set_password('admin')
                 else:
                     client.set_password('user')
@@ -101,8 +97,14 @@ class DbManager:
                 company = Company.objects.get(name=company_name)
                 client.group = company
                 client.staff = staff
-                client.admin = admin
                 client.save()
+
+    def create_statuses(self):
+        statuses = ['W koszyku', 'Potwierdzone', 'Anulowane', 'Zrealizowane']
+        for status_name in statuses:
+            status = OrderStatus()
+            status.status = status_name
+            status.save()
 
     def delete_orders(self):
         Order.objects.all().delete()

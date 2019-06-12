@@ -4,7 +4,7 @@ from .models import Order, OrderSandwiches
 
 class OrderAdmin(admin.ModelAdmin):
 
-    list_display = ('get_username', 'get_company', 'get_sandwiches')
+    list_display = ('get_username', 'get_company')
     list_filter = ('user__group__name',)
 
 

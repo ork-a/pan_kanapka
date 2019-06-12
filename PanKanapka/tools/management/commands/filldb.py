@@ -23,3 +23,5 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Companies populated'))
         db_manager.import_clients()
         self.stdout.write(self.style.SUCCESS('Clients populated, admin user: admin@kanapka.com, password: admin'))
+        db_manager.create_statuses()
+        self.stdout.write(self.style.SUCCESS('Order statuses populated'))
