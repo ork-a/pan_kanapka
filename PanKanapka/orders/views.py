@@ -6,10 +6,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse
 
-
 from clients.models import User
-from sandwiches.models import Sandwich
 from orders.models import OrderSandwiches, Order, OrderStatus
+from sandwiches.models import Sandwich
 
 
 def get_user_pending_order(request):
