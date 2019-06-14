@@ -1,0 +1,10 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Mobilna Kanapka | Administracja{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Mobilna Kanapka - Administracja</a></h1>
+<a href="orders/order/admin_orders">Sprawdź zamówienia</a>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

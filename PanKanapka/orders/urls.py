@@ -1,7 +1,7 @@
 from django.urls import path
 
-from .views import (make_single_order, order_details, delete_sandwich, update_quantity, confirm_order,
-                    show_confirmed_order)
+from .views import (make_single_order, order_details, delete_sandwich, update_quantity,
+                    confirm_order, show_confirmed_order)
 
 app_name = 'orders'
 

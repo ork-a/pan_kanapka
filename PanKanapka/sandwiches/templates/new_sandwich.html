@@ -27,6 +27,9 @@
                                        name="ingredient"
                                        value="{{ ingredient.id }}">
                                 <label class="btn btn-light ingredient_label"
+                                       title="{% if ingredient.allergen.all %}Allergeny:{% endif %}
+{% for allergen in ingredient.allergen.all %}{{ allergen }}
+{% endfor %}"
                                        for="{{ ingredient.id }}">
                                     {{ ingredient }} - <span class="ingredient_price">{{ingredient.price}}</span> PLN
                                 </label>

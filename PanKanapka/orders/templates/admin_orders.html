@@ -1,0 +1,65 @@
+        {% load staticfiles %}
+        <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet" >
+{% autoescape off %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">Złożone zamówienia</h1>
+            <p>Tutaj możesz podejrzeć potwierdzone zamówienia.</p>
+            <p>Na dole strony znajdziesz sumaryczną listę składników.</p>
+            <hr class="my-4">
+        </div>
+        {{orders}}
+        <div>
+            <table>
+                <tr>
+                    <th>Składnik</th>
+                    <th>Ilość</th>
+                </tr>
+                {% for ingredient, quantity in ingredients.items %}
+                    <tr>
+                        <td>{{ingredient}}</td>
+                        <td>{{quantity}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+  {% endautoescape %}
+
+ <style>
+    .container{
+        background: #fff
+    }
+    .company {
+        margin: 10px 0;
+        padding:10px;
+        border-radius: 5px;
+        background: #e2e2e2;
+    }
+    .user {
+        background: #eee;
+        border-radius: 4px;
+        padding:10px;
+        margin: 10px 0;
+    }
+
+    .user_name {
+        font-weight: 600;]
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 16px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+ </style>
