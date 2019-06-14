@@ -109,6 +109,7 @@ class DbManager:
     def delete_orders(self):
         Order.objects.all().delete()
         OrderSandwiches.objects.all().delete()
+        OrderStatus.objects.all().delete()
 
     def delete_clients(self):
         User.objects.all().delete()
